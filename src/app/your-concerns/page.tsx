@@ -72,18 +72,18 @@ export default function YourConcernsPage() {
                                         </ul>
                                     </div>
 
-                                    <div className="bg-white rounded-lg shadow-lg p-6">
-                                        <div className="flex items-center gap-2 mb-4">
-                                            <Building2 className="h-6 w-6 text-teal-500" />
-                                            <h3 className="text-xl font-bold text-[#0B3558]">Amenities Quality</h3>
+                                    <div className="bg-white rounded-xl p-6 shadow-sm">
+                                        <div className="flex items-center mb-4">
+                                            <Building2 className="w-6 h-6 text-[#40BFB4] mr-3" />
+                                            <h3 className="text-xl font-semibold text-[#0B3558]">Amenities Quality</h3>
                                         </div>
                                         <p className="text-gray-600">Second highest at 19.0% of responses</p>
                                         <div className="mt-4">
                                             <h4 className="text-[#0B3558] font-semibold mb-2">Our Solution:</h4>
                                             <ul className="text-sm text-gray-600 space-y-2">
-                                                <li className="flex items-center"><span className="text-teal-500 mr-2">•</span> Regular maintenance schedules</li>
-                                                <li className="flex items-center"><span className="text-teal-500 mr-2">•</span> Quality upgrades planning</li>
-                                                <li className="flex items-center"><span className="text-teal-500 mr-2">•</span> Resident feedback integration</li>
+                                                <li className="flex items-center"><span className="text-[#40BFB4] mr-2">•</span> Regular maintenance schedules</li>
+                                                <li className="flex items-center"><span className="text-[#40BFB4] mr-2">•</span> Quality upgrades planning</li>
+                                                <li className="flex items-center"><span className="text-[#40BFB4] mr-2">•</span> Resident feedback integration</li>
                                             </ul>
                                         </div>
                                     </div>

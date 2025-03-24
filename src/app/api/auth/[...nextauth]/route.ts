@@ -14,41 +14,60 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         }),
     ],
-    debug: true,
+    debug: process.env.NODE_ENV === 'development',
+    session: {
+        strategy: 'jwt',
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+    },
+    cookies: {
+        sessionToken: {
+            name: `next-auth.session-token`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: process.env.NODE_ENV === 'production',
+            },
+        },
+    },
     callbacks: {
-        async session({ session, user }: { session: Session; user: User }) {
-            if (session?.user) {
-                const fullUser = await prisma.user.findUnique({
-                    where: { id: user.id },
-                    select: {
-                        id: true,
-                        email: true,
-                        name: true,
-                        image: true,
-                        address: true,
-                        bio: true,
-                        phoneNumber: true,
-                        isResident: true,
-                    },
-                });
-                
-                if (!fullUser) {
-                    throw new Error('User not found');
+        async session({ session, token }: { session: Session; token: any }) {
+            if (session?.user && token?.sub) {
+                try {
+                    const fullUser = await prisma.user.findUnique({
+                        where: { id: token.sub },
+                        select: {
+                            id: true,
+                            email: true,
+                            name: true,
+                            image: true,
+                            address: true,
+                            bio: true,
+                            phoneNumber: true,
+                            isResident: true,
+                        },
+                    });
+                    
+                    if (fullUser) {
+                        session.user = {
+                            ...session.user,
+                            ...fullUser,
+                        };
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
                 }
-
-                session.user = {
-                    ...session.user,
-                    ...fullUser,
-                };
-
-                if (!session?.user?.email) {
-                    throw new Error('No user email in session');
-                }
-
             }
 
             return session;
         },
+        async jwt({ token, user }) {
+            // Add user ID to token when first created
+            if (user) {
+                token.sub = user.id;
+            }
+            return token;
+        }
     },
 };
 

@@ -143,11 +143,6 @@
   body {
     @apply bg-background text-foreground;
   }
-  p {
-    font-size: 21px;
-    line-height: 32px;
-    font-weight: 400;
-  }
 }
 
 @layer utilities {

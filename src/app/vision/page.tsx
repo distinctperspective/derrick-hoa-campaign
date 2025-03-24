@@ -151,7 +151,7 @@ export default function VisionPage() {
                                 <li>Keeping residents informed about commercial developments and creating opportunities for resident-owned businesses</li>
                                 <li>Preserving the natural beauty that makes Grand Central Park special while accommodating thoughtful growth</li>
                             </ul>
-                            <div className='bg-gray-50 p-6 rounded-xl'>
+                            <div className='bg-white p-8 rounded-xl shadow-sm border border-gray-100'>
                                 <p className='text-gray-700 font-medium'>
                                     I believe Grand Central Park can be a community where the natural environment is protected, where neighbors know and support each other, where our amenities exceed expectations, and where every resident feels heard and valued. With responsive leadership and strategic planning, we can address our challenges while enhancing what makes this community extraordinary.
                                 </p>
