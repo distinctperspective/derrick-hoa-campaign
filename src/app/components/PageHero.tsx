@@ -17,6 +17,7 @@ const PageHero: React.FC<PageHeroProps> = ({ title, subtitle, imageSrc, imageAlt
                     src={imageSrc}
                     alt={imageAlt}
                     fill
+                    sizes="100vw"
                     className={`object-cover scale-x-[-1] object-[${objectPosition}]`}
                     priority
                 />

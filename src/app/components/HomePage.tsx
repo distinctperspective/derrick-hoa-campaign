@@ -21,6 +21,7 @@ const HomePage: React.FC = () => {
                             src='/images/hero-background.jpg'
                             alt='Grand Central Park'
                             fill
+                            sizes="100vw"
                             className='object-cover'
                             priority
                         />
@@ -75,6 +76,7 @@ const HomePage: React.FC = () => {
                                         src='/images/derrick.jpg'
                                         alt='Derrick Threatt - Candidate for Grand Central Park RAI Board'
                                         fill
+                                        sizes="(max-width: 640px) 288px, (max-width: 768px) 320px, (max-width: 1024px) 384px, 384px"
                                         className='rounded-2xl object-cover'
                                         style={{ objectPosition: '50% 30%' }}
                                         priority

@@ -72,6 +72,7 @@ export default function ProfilePage() {
                     src="/images/lakehouse.jpeg"
                     alt="Grand Central Park Lakehouse"
                     fill
+                    sizes="100vw"
                     className="object-cover"
                     priority
                 />

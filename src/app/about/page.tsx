@@ -119,10 +119,13 @@ export default function AboutPage() {
                     <div className='grid gap-6 md:grid-cols-2'>
                         <div className='bg-white rounded-xl p-8 shadow-sm'>
                             <div className='relative w-full h-[400px]'>
-                                <img
+                                <Image
                                     src="/images/veteran.jpg"
                                     alt="Derrick Threatt Military Service"
-                                    className='w-full h-full object-cover rounded-lg'
+                                    fill
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                    className='object-cover rounded-lg'
+                                    priority
                                 />
                             </div>
                         </div>
@@ -133,6 +136,7 @@ export default function AboutPage() {
                                     alt="United States Air Force Seal"
                                     width={120}
                                     height={120}
+                                    sizes="(max-width: 768px) 100px, 120px"
                                     className='flex-shrink-0'
                                 />
                                 <h3 className='text-3xl font-semibold text-[#0B3558]'>United States Air Force</h3>
