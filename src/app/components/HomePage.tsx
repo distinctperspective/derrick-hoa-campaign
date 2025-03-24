@@ -152,31 +152,198 @@ const HomePage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Feature Cards */}
-                <div className='bg-gray-50'>
+                {/* Vision Preview Section */}
+                <div className='relative py-16'>
+                    {/* Background Image */}
+                    <div className='absolute inset-0 w-full h-full'>
+                        <Image
+                            src='/images/community.jpg'
+                            alt='Grand Central Park Community'
+                            fill
+                            sizes="100vw"
+                            className='object-cover'
+                        />
+                        <div className='absolute inset-0 bg-black/60' />
+                    </div>
+                    
+                    <div className='relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+                        <div className='text-center mb-12'>
+                            <h2 className='text-3xl sm:text-4xl font-bold text-white mb-4'>My Vision for Our Community</h2>
+                            <p className='text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto'>
+                                As your first resident board member, I'm committed to these key priorities:
+                            </p>
+                        </div>
+
+                        <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-4'>
+                            <div className='bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20'>
+                                <h3 className='text-xl font-semibold text-[#40BFB4] mb-3'>Resident Voice</h3>
+                                <p className='text-white'>Ensuring resident perspectives are represented in all board decisions.</p>
+                            </div>
+                            
+                            <div className='bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20'>
+                                <h3 className='text-xl font-semibold text-[#40BFB4] mb-3'>Transparent Communication</h3>
+                                <p className='text-white'>Keeping residents informed with clear, consistent updates on board activities.</p>
+                            </div>
+                            
+                            <div className='bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20'>
+                                <h3 className='text-xl font-semibold text-[#40BFB4] mb-3'>Community Excellence</h3>
+                                <p className='text-white'>Maintaining and enhancing our amenities and common areas to highest standards.</p>
+                            </div>
+                            
+                            <div className='bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20'>
+                                <h3 className='text-xl font-semibold text-[#40BFB4] mb-3'>Fiscal Responsibility</h3>
+                                <p className='text-white'>Ensuring HOA fees provide maximum value and benefit to all residents.</p>
+                            </div>
+                        </div>
+                        
+                        <div className='mt-10 text-center'>
+                            <Link
+                                href='/vision'
+                                className='inline-flex items-center text-[#40BFB4] hover:text-white font-semibold transition-colors'
+                            >
+                                Read my full vision for Grand Central Park
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                </svg>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Page Navigation Section */}
+                <div className='bg-white py-16'>
                     <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-                        <div className='grid grid-cols-1 gap-6 py-12 sm:grid-cols-3 lg:py-24'>
-                            <div className='bg-white rounded-xl border-gray-100 border p-6 transition-shadow hover:shadow-lg'>
-                                <h3 className='mb-2 text-xl font-semibold'>Community First</h3>
-                                <p className='text-gray-600'>
-                                    Bringing resident perspectives to board decisions
+                        <div className='text-center mb-12'>
+                            <h2 className='text-3xl sm:text-4xl font-bold text-[#0B3558] mb-4'>Learn More About My Campaign</h2>
+                            <p className='text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto'>
+                                Explore these pages to learn more about my background, plans, and priorities for our community.
+                            </p>
+                        </div>
+
+                        {/* Vision & About Section */}
+                        <div className='flex flex-col md:flex-row gap-8 mb-12'>
+                            <div className='md:w-1/2 bg-[#0B3558] rounded-xl p-8 text-white'>
+                                <h3 className='text-2xl font-semibold text-[#40BFB4] mb-4'>My Vision</h3>
+                                <p className='mb-6'>
+                                    A comprehensive plan for improving our community and representing resident interests on the board. 
+                                    Learn about my priorities and how I plan to make a positive impact.
                                 </p>
+                                <Link
+                                    href='/vision'
+                                    className='inline-flex items-center text-white hover:text-[#40BFB4] transition-colors font-semibold'
+                                >
+                                    Explore My Vision
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                </Link>
                             </div>
-                            <div className='bg-white rounded-xl border-gray-100 border p-6 transition-shadow hover:shadow-lg'>
-                                <h3 className='mb-2 text-xl font-semibold'>Transparency</h3>
-                                <p className='text-gray-600'>
-                                    Open communication with all residents
+                            
+                            <div className='md:w-1/2 bg-gray-100 rounded-xl p-8'>
+                                <h3 className='text-2xl font-semibold text-[#0B3558] mb-4'>About Derrick</h3>
+                                <p className='mb-6 text-gray-700'>
+                                    Learn about my background, experience, and why I'm passionate about serving our community. 
+                                    My professional expertise and community involvement make me uniquely qualified to serve.
                                 </p>
+                                <Link
+                                    href='/about'
+                                    className='inline-flex items-center text-[#0B3558] hover:text-[#40BFB4] transition-colors font-semibold'
+                                >
+                                    Read My Story
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                </Link>
                             </div>
-                            <div className='bg-white rounded-xl border-gray-100 border p-6 transition-shadow hover:shadow-lg'>
-                                <h3 className='mb-2 text-xl font-semibold'>Experience</h3>
-                                <p className='text-gray-600'>
-                                    Professional expertise serving our community
+                        </div>
+
+                        {/* Concerns & Financials Section */}
+                        <div className='flex flex-col-reverse md:flex-row gap-8'>
+                            <div className='md:w-1/2 bg-gray-100 rounded-xl p-8'>
+                                <h3 className='text-2xl font-semibold text-[#0B3558] mb-4'>Your Concerns</h3>
+                                <p className='mb-6 text-gray-700'>
+                                    See how I plan to address the top concerns shared by our community members.
+                                    From amenities to HOA fees, I'm focused on the issues that matter most to you.
                                 </p>
+                                <Link
+                                    href='/your-concerns'
+                                    className='inline-flex items-center text-[#0B3558] hover:text-[#40BFB4] transition-colors font-semibold'
+                                >
+                                    View Community Concerns
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                </Link>
+                            </div>
+                            
+                            <div className='md:w-1/2 bg-[#0B3558] rounded-xl p-8 text-white'>
+                                <h3 className='text-2xl font-semibold text-[#40BFB4] mb-4'>Financial Approach</h3>
+                                <p className='mb-6'>
+                                    My approach to ensuring fiscal responsibility and transparency with HOA funds.
+                                    I believe in maximizing value for all residents through careful financial management.
+                                </p>
+                                <Link
+                                    href='/vision'
+                                    className='inline-flex items-center text-white hover:text-[#40BFB4] transition-colors font-semibold'
+                                >
+                                    Learn About My Financial Approach
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                </Link>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                {/* CTA Section */}
+                <div className='bg-[#0B3558] py-16'>
+                    <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+                        <div className='text-center'>
+                            <h2 className='text-3xl sm:text-4xl font-bold text-white mb-4'>Important Dates</h2>
+                            <p className='text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto mb-8'>
+                                Make your voice heard in this historic election for our community's first resident board member.
+                            </p>
+                            
+                            <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto'>
+                                <div className='bg-white/10 backdrop-blur-sm rounded-xl p-6'>
+                                    <h3 className='text-xl font-semibold text-[#40BFB4] mb-2'>Voting Opens</h3>
+                                    <p className='text-white'>March 17, 2025</p>
+                                </div>
+                                
+                                <div className='bg-white/10 backdrop-blur-sm rounded-xl p-6'>
+                                    <h3 className='text-xl font-semibold text-[#40BFB4] mb-2'>Town Hall</h3>
+                                    <p className='text-white'>April 2, 2025</p>
+                                    <p className='text-white text-sm mt-1'>6:00PM - 8:00PM</p>
+                                </div>
+                                
+                                <div className='bg-white/10 backdrop-blur-sm rounded-xl p-6'>
+                                    <h3 className='text-xl font-semibold text-[#40BFB4] mb-2'>Voting Closes</h3>
+                                    <p className='text-white'>April 7, 2025</p>
+                                </div>
+
+                                <div className='bg-white/10 backdrop-blur-sm rounded-xl p-6'>
+                                    <h3 className='text-xl font-semibold text-[#40BFB4] mb-2'>Results Announced</h3>
+                                    <p className='text-white'>April 10, 2025</p>
+                                    <p className='text-white text-sm mt-1'>Annual Meeting</p>
+                                </div>
+                            </div>
+                            
+                            <div className='mt-10'>
+                                <a
+                                    href='https://grandcentralpark.ivotehoa.com/login'
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                    className='rounded-full bg-[#E85C41] px-8 py-3 text-white hover:bg-[#E85C41]/90 transition-colors font-extrabold uppercase tracking-wide'
+                                >
+                                    Vote Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Footer */}
             </main>
             <Footer />
         </div>

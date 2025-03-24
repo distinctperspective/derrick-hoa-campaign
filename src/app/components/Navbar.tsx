@@ -105,38 +105,59 @@ const Navbar = () => {
 
                     {/* Mobile Navigation */}
                     <div className='md:hidden flex items-center gap-4'>
-                        <Button 
-                            variant="ghost" 
-                            className="text-white p-0 hover:bg-transparent relative w-8 h-8"
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        >
-                            <motion.div
-                                className="w-6 h-[2px] bg-white absolute"
-                                initial={false}
-                                animate={{
-                                    rotate: isMenuOpen ? 45 : 0,
-                                    y: isMenuOpen ? 0 : -4
-                                }}
-                                transition={{ duration: 0.2 }}
-                            />
-                            <motion.div
-                                className="w-6 h-[2px] bg-white absolute"
-                                initial={false}
-                                animate={{
-                                    opacity: isMenuOpen ? 0 : 1
-                                }}
-                                transition={{ duration: 0.2 }}
-                            />
-                            <motion.div
-                                className="w-6 h-[2px] bg-white absolute"
-                                initial={false}
-                                animate={{
-                                    rotate: isMenuOpen ? -45 : 0,
-                                    y: isMenuOpen ? 0 : 4
-                                }}
-                                transition={{ duration: 0.2 }}
-                            />
-                        </Button>
+                        {session ? (
+                            <button 
+                                className="relative flex items-center"
+                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            >
+                                {session.user?.image ? (
+                                    <Image
+                                        src={session.user.image}
+                                        alt={session.user.name || "User"}
+                                        width={32}
+                                        height={32}
+                                        className="rounded-full border-2 border-white hover:border-gray-200 transition-colors"
+                                    />
+                                ) : (
+                                    <div className="w-8 h-8 rounded-full bg-[#E85C41] flex items-center justify-center border-2 border-white hover:border-gray-200 transition-colors">
+                                        <User className="h-5 w-5 text-white" />
+                                    </div>
+                                )}
+                            </button>
+                        ) : (
+                            <Button 
+                                variant="ghost" 
+                                className="text-white p-0 hover:bg-transparent relative w-8 h-8"
+                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            >
+                                <motion.div
+                                    className="w-6 h-[2px] bg-white absolute"
+                                    initial={false}
+                                    animate={{
+                                        rotate: isMenuOpen ? 45 : 0,
+                                        y: isMenuOpen ? 0 : -4
+                                    }}
+                                    transition={{ duration: 0.2 }}
+                                />
+                                <motion.div
+                                    className="w-6 h-[2px] bg-white absolute"
+                                    initial={false}
+                                    animate={{
+                                        opacity: isMenuOpen ? 0 : 1
+                                    }}
+                                    transition={{ duration: 0.2 }}
+                                />
+                                <motion.div
+                                    className="w-6 h-[2px] bg-white absolute"
+                                    initial={false}
+                                    animate={{
+                                        rotate: isMenuOpen ? -45 : 0,
+                                        y: isMenuOpen ? 0 : 4
+                                    }}
+                                    transition={{ duration: 0.2 }}
+                                />
+                            </Button>
+                        )}
                         <AnimatePresence>
                         {isMenuOpen && (
                             <motion.div 
@@ -149,25 +170,8 @@ const Navbar = () => {
                                 <div className="container mx-auto max-w-[1600px]">
                                     {session && (
                                         <div className="py-2 mb-3 border-b border-white/20">
-                                            <div className="flex items-center gap-3 py-2">
-                                                {session.user?.image ? (
-                                                    <Image
-                                                        src={session.user.image}
-                                                        alt={session.user.name || "User"}
-                                                        width={40}
-                                                        height={40}
-                                                        className="rounded-full border-2 border-white"
-                                                    />
-                                                ) : (
-                                                    <div className="w-10 h-10 rounded-full bg-[#E85C41] flex items-center justify-center border-2 border-white">
-                                                        <User className="h-6 w-6 text-white" />
-                                                    </div>
-                                                )}
-                                                <div>
-                                                    <div className="font-medium text-white">{session.user?.name}</div>
-                                                    <div className="text-sm text-white/80">{session.user?.email}</div>
-                                                </div>
-                                            </div>
+                                            <div className="font-medium text-white">{session.user?.name}</div>
+                                            <div className="text-sm text-white/80">{session.user?.email}</div>
                                         </div>
                                     )}
                                     <Link 
@@ -241,7 +245,7 @@ const Navbar = () => {
                                                     signOut();
                                                     setIsMenuOpen(false);
                                                 }}
-                                                className='block w-full text-white bg-[#E85C41]/80 hover:bg-[#E85C41] px-6 py-2 rounded-full font-extrabold uppercase tracking-wide transition-colors my-2 text-center'
+                                                className='block w-full text-white bg-[#40BFB4] hover:bg-[#40BFB4]/90 px-6 py-2 rounded-full font-extrabold uppercase tracking-wide transition-colors my-2 text-center'
                                             >
                                                 Logout
                                             </button>
