@@ -105,46 +105,6 @@ const Navbar = () => {
 
                     {/* Mobile Navigation */}
                     <div className='md:hidden flex items-center gap-4'>
-                        {session && (
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <button className="relative flex items-center">
-                                        {session.user?.image ? (
-                                            <Image
-                                                src={session.user.image}
-                                                alt={session.user.name || "User"}
-                                                width={32}
-                                                height={32}
-                                                className="rounded-full border-2 border-white hover:border-gray-200 transition-colors"
-                                            />
-                                        ) : (
-                                            <div className="w-8 h-8 rounded-full bg-[#E85C41] flex items-center justify-center border-2 border-white hover:border-gray-200 transition-colors">
-                                                <User className="h-5 w-5 text-white" />
-                                            </div>
-                                        )}
-                                    </button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-64 mt-4 bg-[#0B3558] border-none text-white z-40">
-                                    <DropdownMenuLabel>
-                                        <div className="font-medium">{session.user?.name}</div>
-                                        <div className="text-sm text-white/80">{session.user?.email}</div>
-                                    </DropdownMenuLabel>
-                                    <DropdownMenuSeparator className="bg-white/20" />
-                                    <DropdownMenuItem 
-                                        className="cursor-pointer focus:bg-white/10 focus:text-white"
-                                        onClick={() => router.push('/profile')}
-                                    >
-                                        <span className="font-extrabold uppercase tracking-wide">Profile</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem 
-                                        className="cursor-pointer focus:bg-white/10 focus:text-white"
-                                        onClick={() => signOut()}
-                                    >
-                                        <span className="font-extrabold uppercase tracking-wide">Logout</span>
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        )}
                         <Button 
                             variant="ghost" 
                             className="text-white p-0 hover:bg-transparent relative w-8 h-8"
@@ -187,6 +147,29 @@ const Navbar = () => {
                                 className="fixed top-[64px] left-[16px] right-[16px] bg-[#0B3558] shadow-lg py-4 px-6 rounded-b-2xl z-40"
                             >
                                 <div className="container mx-auto max-w-[1600px]">
+                                    {session && (
+                                        <div className="py-2 mb-3 border-b border-white/20">
+                                            <div className="flex items-center gap-3 py-2">
+                                                {session.user?.image ? (
+                                                    <Image
+                                                        src={session.user.image}
+                                                        alt={session.user.name || "User"}
+                                                        width={40}
+                                                        height={40}
+                                                        className="rounded-full border-2 border-white"
+                                                    />
+                                                ) : (
+                                                    <div className="w-10 h-10 rounded-full bg-[#E85C41] flex items-center justify-center border-2 border-white">
+                                                        <User className="h-6 w-6 text-white" />
+                                                    </div>
+                                                )}
+                                                <div>
+                                                    <div className="font-medium text-white">{session.user?.name}</div>
+                                                    <div className="text-sm text-white/80">{session.user?.email}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                     <Link 
                                         href="/vision" 
                                         className='block text-white font-extrabold uppercase tracking-wide hover:text-gray-200 transition-colors py-2'
@@ -222,15 +205,15 @@ const Navbar = () => {
                                     >
                                         Request
                                     </Link>
-                                    <a 
-                                        href="https://grandcentralpark.ivotehoa.com/login"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className='block text-white bg-[#E85C41] hover:bg-[#E85C41]/90 px-4 py-2 rounded-full font-extrabold uppercase tracking-wide transition-colors my-2 text-center'
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Vote Now
-                                    </a>
+                                    {session && (
+                                        <Link 
+                                            href="/profile" 
+                                            className='block text-white font-extrabold uppercase tracking-wide hover:text-gray-200 transition-colors py-2'
+                                            onClick={() => setIsMenuOpen(false)}
+                                        >
+                                            Profile
+                                        </Link>
+                                    )}
                                     {!session && (
                                         <button
                                             onClick={() => {
@@ -242,6 +225,28 @@ const Navbar = () => {
                                             Login
                                         </button>
                                     )}
+                                    <div className="mt-3 pt-3 border-t border-white/20">
+                                        <a 
+                                            href="https://grandcentralpark.ivotehoa.com/login"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className='block text-white bg-[#E85C41] hover:bg-[#E85C41]/90 px-4 py-2 rounded-full font-extrabold uppercase tracking-wide transition-colors my-2 text-center'
+                                            onClick={() => setIsMenuOpen(false)}
+                                        >
+                                            Vote Now
+                                        </a>
+                                        {session && (
+                                            <button
+                                                onClick={() => {
+                                                    signOut();
+                                                    setIsMenuOpen(false);
+                                                }}
+                                                className='block w-full text-white bg-[#E85C41]/80 hover:bg-[#E85C41] px-6 py-2 rounded-full font-extrabold uppercase tracking-wide transition-colors my-2 text-center'
+                                            >
+                                                Logout
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
                             </motion.div>
                         )}
