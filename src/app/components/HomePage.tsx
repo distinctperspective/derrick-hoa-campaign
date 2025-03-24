@@ -5,7 +5,8 @@ import Navbar from './Navbar';
 import { 
     Trees, 
     Building2, 
-    DollarSign 
+    DollarSign,
+    Phone
 } from 'lucide-react';
 
 const HomePage: React.FC = () => {
@@ -49,6 +50,13 @@ const HomePage: React.FC = () => {
                                     As a proud resident of Grand Central Park, I'm running to be our community's
                                     first resident board member. Together, we can shape the future of our neighborhood.
                                 </p>
+
+                                <div className='mt-4 flex items-center text-white'>
+                                    <a href='tel:+19362515911' className='flex items-center text-[#40BFB4] hover:text-[#40BFB4]/80 transition-colors'>
+                                        <Phone className='w-5 h-5 mr-2' />
+                                        +1 936 251 5911
+                                    </a>
+                                </div>
 
                                 <div className='mt-8 flex flex-col sm:flex-row gap-4'>
                                     <Link
