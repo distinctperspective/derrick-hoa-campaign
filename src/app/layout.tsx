@@ -30,7 +30,38 @@ const mrDafoe = Mr_Dafoe({
 
 export const metadata: Metadata = {
     title: 'Derrick Threatt for GCP RAI',
-    description: 'Campaign website for Derrick Threatt, candidate for Grand Central Park Residential Association Inc. Board Member'
+    description: 'Campaign website for Derrick Threatt, candidate for Grand Central Park Residential Association Inc. Board Member',
+    keywords: ['Derrick Threatt', 'Grand Central Park', 'GCP', 'RAI', 'Board Member', 'Conroe', 'Texas', 'Resident Board Member', 'HOA', 'Community'],
+    authors: [{ name: 'Derrick Threatt' }],
+    creator: 'Derrick Threatt',
+    publisher: 'Derrick Threatt Campaign',
+    robots: 'index, follow',
+    metadataBase: new URL('https://derrickthreatt.com'),
+    alternates: {
+        canonical: '/'
+    },
+    openGraph: {
+        title: 'Derrick Threatt for GCP RAI',
+        description: 'Campaign website for Derrick Threatt, candidate for Grand Central Park Residential Association Inc. Board Member',
+        images: [
+            {
+                url: '/images/og-image.jpg',
+                width: 1200,
+                height: 630,
+                alt: 'Derrick Threatt for GCP RAI Board'
+            }
+        ],
+        type: 'website',
+        locale: 'en_US',
+        siteName: 'Derrick Threatt for GCP RAI'
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Derrick Threatt for GCP RAI',
+        description: 'Campaign website for Derrick Threatt, candidate for Grand Central Park Residential Association Inc. Board Member',
+        images: ['/images/og-image.jpg'],
+        creator: '@derrickthreatt'
+    }
 };
 
 const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
