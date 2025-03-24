@@ -154,6 +154,16 @@ const HomePage: React.FC = () => {
 
                 {/* Vision Preview Section */}
                 <div className='relative py-16'>
+                    {/* GCP Logo - Positioned at the top of Vision section */}
+                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                      <Image
+                        src="/images/gcp-logo.png"
+                        alt="Grand Central Park Logo"
+                        width={140}
+                        height={140}
+                      />
+                    </div>
+                    
                     {/* Background Image */}
                     <div className='absolute inset-0 w-full h-full'>
                         <Image
@@ -334,10 +344,16 @@ const HomePage: React.FC = () => {
                                     href='https://grandcentralpark.ivotehoa.com/login'
                                     target='_blank'
                                     rel='noopener noreferrer'
-                                    className='rounded-full bg-[#E85C41] px-8 py-3 text-white hover:bg-[#E85C41]/90 transition-colors font-extrabold uppercase tracking-wide'
+                                    className='rounded-full bg-[#E85C41] px-8 py-3 text-white hover:bg-[#E85C41]/90 transition-colors font-extrabold uppercase tracking-wide mr-4'
                                 >
                                     Vote Now
                                 </a>
+                                <Link
+                                    href='/request'
+                                    className='rounded-full bg-[#40BFB4] px-8 py-3 text-white hover:bg-[#40BFB4]/90 transition-colors font-extrabold uppercase tracking-wide'
+                                >
+                                    Contact Me
+                                </Link>
                             </div>
                         </div>
                     </div>

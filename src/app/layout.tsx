@@ -6,6 +6,7 @@ import { Mr_Dafoe } from 'next/font/google';
 
 import { ThemeProvider } from 'next-themes';
 import { Providers } from './providers';
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 import './globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -41,6 +42,7 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
                 className={`${geistSans.variable} ${geistMono.variable} ${mrDafoe.variable} bg-background text-foreground overscroll-none antialiased`}>
                 <ThemeProvider attribute='class'>
                     <Providers>
+                        <GoogleAnalytics gaMeasurementId="G-29QR8H8K8S" />
                         {children}
                         <Toaster />
                     </Providers>

@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { Label } from "@/registry/new-york-v4/ui/label";
 import dynamic from 'next/dynamic';
 import { toast } from "sonner";
+import LoginWall from '../components/LoginWall';
 
 // Import MapboxSearch component dynamically with SSR disabled
 const MapboxSearch = dynamic(
@@ -63,6 +64,11 @@ export default function ProfilePage() {
             setIsLoading(false);
         }
     };
+
+    // If user is not logged in, show the login wall
+    if (!session) {
+        return <LoginWall />;
+    }
 
     return (
         <main className="min-h-screen relative">

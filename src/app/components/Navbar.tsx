@@ -44,7 +44,7 @@ const Navbar = () => {
                             Financials
                         </Link>
                         <Link href="/request" className='text-white font-extrabold uppercase tracking-wide hover:text-gray-200 transition-colors'>
-                            Request
+                            Contact Me
                         </Link>
                         <a 
                             href="https://grandcentralpark.ivotehoa.com/login"
@@ -207,7 +207,7 @@ const Navbar = () => {
                                         className='block text-white font-extrabold uppercase tracking-wide hover:text-gray-200 transition-colors py-2'
                                         onClick={() => setIsMenuOpen(false)}
                                     >
-                                        Request
+                                        Contact Me
                                     </Link>
                                     {session && (
                                         <Link 
