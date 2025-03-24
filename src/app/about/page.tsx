@@ -187,10 +187,10 @@ export default function AboutPage() {
                             </p>
                             <div className='flex flex-wrap justify-center gap-4'>
                                 <a 
-                                    href='tel:281-607-2808'
+                                    href='tel:+19362515911'
                                     className='inline-flex items-center rounded-full bg-[#40BFB4] px-6 py-3 text-white hover:bg-[#40BFB4]/90 transition-colors font-bold'
                                 >
-                                    Call: 281-607-2808
+                                    Call: +1 936 251 5911
                                 </a>
                                 <a 
                                     href='mailto:dthreatt@digitalcreations.net'
