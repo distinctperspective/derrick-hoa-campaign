@@ -3,10 +3,10 @@ import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { Mr_Dafoe } from 'next/font/google';
+import Script from 'next/script';
 
 import { ThemeProvider } from 'next-themes';
 import { Providers } from './providers';
-import { GoogleAnalytics } from "nextjs-google-analytics";
 
 import './globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -42,7 +42,26 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
                 className={`${geistSans.variable} ${geistMono.variable} ${mrDafoe.variable} bg-background text-foreground overscroll-none antialiased`}>
                 <ThemeProvider attribute='class'>
                     <Providers>
-                        <GoogleAnalytics gaMeasurementId="G-29QR8H8K8S" />
+                        {process.env.NODE_ENV === 'production' && (
+                            <>
+                                <Script 
+                                    src={`https://www.googletagmanager.com/gtag/js?id=G-29QR8H8K8S`} 
+                                    strategy="afterInteractive" 
+                                />
+                                <Script 
+                                    id="google-analytics" 
+                                    strategy="afterInteractive"
+                                    dangerouslySetInnerHTML={{
+                                        __html: `
+                                            window.dataLayer = window.dataLayer || [];
+                                            function gtag(){dataLayer.push(arguments);}
+                                            gtag('js', new Date());
+                                            gtag('config', 'G-29QR8H8K8S');
+                                        `,
+                                    }}
+                                />
+                            </>
+                        )}
                         {children}
                         <Toaster />
                     </Providers>
