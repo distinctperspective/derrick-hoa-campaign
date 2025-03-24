@@ -107,8 +107,9 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
                                             function gtag(){dataLayer.push(arguments);}
                                             gtag('js', new Date());
                                             gtag('config', 'G-29QR8H8K8S', {
-                                                page_path: window.location.pathname,
-                                                send_page_view: true
+                                                send_page_view: true,
+                                                cookie_flags: 'max-age=7200;secure;samesite=none',
+                                                cookie_domain: 'gcphoatx.com'
                                             });
                                         `,
                                     }}

@@ -18,11 +18,12 @@ export const usePageTracking = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (process.env.NODE_ENV === 'production' && typeof window.gtag === 'function') {
+    if (typeof window.gtag === 'function') {
       // Track page view
-      window.gtag('config', 'G-29QR8H8K8S', {
-        page_path: pathname,
+      window.gtag('event', 'page_view', {
         page_title: document.title,
+        page_location: window.location.href,
+        page_path: pathname,
       });
     }
   }, [pathname]);
