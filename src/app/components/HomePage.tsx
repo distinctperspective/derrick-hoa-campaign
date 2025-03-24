@@ -119,8 +119,8 @@ const HomePage: React.FC = () => {
                           <Building2 className='w-6 h-6 text-[#40BFB4] mr-3' />
                           <h3 className='text-xl font-semibold text-[#0B3558]'>Amenities Quality</h3>
                         </div>
-                        <p className='text-gray-600'>Second highest at 19.0% of responses</p>
-                        <div className='mt-4 space-y-2 text-gray-600'>
+                        <p className='text-gray-600 mb-4'>Second highest at 19.0% of responses</p>
+                        <div className='space-y-2 text-gray-600'>
                           <p><strong>Our Solution:</strong></p>
                           <ul className='list-disc pl-5 space-y-1'>
                             <li>Comprehensive amenity audit</li>

@@ -23,7 +23,7 @@ export default function VisionPage() {
                     {/* Introduction */}
                     <div className='mb-16'>
                         <div className='prose prose-lg mx-auto'>
-                            <p className='text-gray-600 leading-relaxed'>
+                            <p className='text-gray-600 leading-normal'>
                                 When I first chose Grand Central Park as my home, I was drawn to its unique balance – a safe neighborhood nestled against natural wilderness, yet conveniently close to urban amenities. I valued the promise of great schools, low taxes, and peaceful living for my family. Today, I still cherish these foundational elements, along with our quick access to I-45, proximity to The Woodlands, nearby healthcare facilities, and most importantly, our respectful neighbors who maintain our clean, quiet surroundings.
                             </p>
                         </div>
@@ -33,7 +33,7 @@ export default function VisionPage() {
                     <div className='mb-16'>
                         <h2 className='text-2xl sm:text-3xl font-bold text-[#0B3558] mb-8'>Who We Are</h2>
                         <div className='prose prose-lg'>
-                            <p className='text-gray-600'>
+                            <p className='text-gray-600 leading-normal'>
                                 Grand Central Park stands apart with its upscale, modern character. Our community honors its heritage as a former Boy Scout camp while embracing thoughtful development. This blend of history and progress creates our distinctive identity – a secluded sanctuary that's still connected to everything we need.
                             </p>
                         </div>

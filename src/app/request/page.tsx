@@ -154,8 +154,8 @@ export default function RequestPage() {
                                         value={formData.description}
                                         onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                                         rows={4}
-                                        className="bg-gray-100 text-[#0B3558] placeholder:text-gray-400 border-gray-200 focus:border-[#0B3558] focus:ring-[#0B3558] md:min-h-[200px]"
                                         placeholder="Provide more details about your request"
+                                        className="bg-gray-100 text-[#0B3558] placeholder:text-gray-400 border-gray-200 focus:border-[#0B3558] focus:ring-[#0B3558]"
                                         required
                                     />
                                 </div>

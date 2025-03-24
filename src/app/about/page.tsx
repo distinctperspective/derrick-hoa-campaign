@@ -137,7 +137,7 @@ export default function AboutPage() {
                                 />
                                 <h3 className='text-3xl font-semibold text-[#0B3558]'>United States Air Force</h3>
                             </div>
-                            <ul className='list-disc pl-6 space-y-3 text-gray-600 text-lg'>
+                            <ul className='list-disc pl-6 space-y-3 text-gray-600 text-[21px] leading-[32px]'>
                                 <li>Crew Chief & Electronics Warfare Officer</li>
                                 <li>B-1B/B-52G Bomber</li>
                                 <li>Stationed at Lowery, Sheppard and Mather AFB</li>
