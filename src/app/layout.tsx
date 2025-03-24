@@ -11,6 +11,7 @@ import { Providers } from './providers';
 import './globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Toaster } from '@/registry/new-york-v4/ui/sonner';
+import { PageViewTracker } from '@/components/PageViewTracker';
 
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
@@ -105,12 +106,16 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
                                             window.dataLayer = window.dataLayer || [];
                                             function gtag(){dataLayer.push(arguments);}
                                             gtag('js', new Date());
-                                            gtag('config', 'G-29QR8H8K8S');
+                                            gtag('config', 'G-29QR8H8K8S', {
+                                                page_path: window.location.pathname,
+                                                send_page_view: true
+                                            });
                                         `,
                                     }}
                                 />
                             </>
                         )}
+                        <PageViewTracker />
                         {children}
                         <Toaster />
                     </Providers>
