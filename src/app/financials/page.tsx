@@ -15,6 +15,8 @@ import {
     ClipboardList 
 } from 'lucide-react';
 
+export const dynamic = 'force-static';
+
 export default function FinancialsPage() {
     return (
         <div className='min-h-screen flex flex-col'>

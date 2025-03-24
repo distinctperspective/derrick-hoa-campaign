@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 declare global {
   interface Window {
@@ -16,17 +16,14 @@ declare global {
 
 export const usePageTracking = () => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'production' && typeof window.gtag === 'function') {
-      const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
-      
       // Track page view
       window.gtag('config', 'G-29QR8H8K8S', {
-        page_path: url,
+        page_path: pathname,
         page_title: document.title,
       });
     }
-  }, [pathname, searchParams]);
+  }, [pathname]);
 };
