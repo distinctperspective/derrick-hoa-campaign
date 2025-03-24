@@ -11,6 +11,7 @@ import { Label } from "@/registry/new-york-v4/ui/label";
 import { toast } from "sonner";
 import LoginWall from '../components/LoginWall';
 import RequestsTable from '../components/RequestsTable';
+import { redirect } from 'next/navigation';
 
 export default function RequestPage() {
     const { data: session } = useSession();
@@ -34,6 +35,7 @@ export default function RequestPage() {
             if (!response.ok) {
                 throw new Error('Failed to fetch requests');
             }
+
             const data = await response.json();
             setRequests(data);
             // Cache the requests
@@ -88,6 +90,10 @@ export default function RequestPage() {
             setIsLoading(false);
         }
     };
+
+    if (!session?.user?.email) {
+        redirect('/api/auth/signin');
+    }
 
     return (
         <main className="min-h-screen relative">

@@ -10,7 +10,8 @@ export async function POST(req: Request, { params }: { params: { id: string } })
         const session = await getServerSession(authOptions);
         
         if (!session) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            return new Response('Unauthorized', { status: 401 });
+
         }
 
         const { content } = await req.json();
@@ -31,9 +32,17 @@ export async function POST(req: Request, { params }: { params: { id: string } })
             },
         });
 
-        return NextResponse.json(reply);
+        const replies = await prisma.reply.findMany({
+            where: { requestId: params.id },
+            include: { user: true },
+            orderBy: { createdAt: 'desc' },
+        });
+
+        
+        return NextResponse.json(replies);
     } catch (error) {
         console.error('Error creating reply:', error);
+
         return NextResponse.json(
             { error: 'Internal server error' },
             { status: 500 }

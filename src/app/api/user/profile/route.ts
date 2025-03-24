@@ -30,6 +30,7 @@ export async function PUT(req: Request) {
         return NextResponse.json(updatedUser);
     } catch (error) {
         console.error('Error updating profile:', error);
+
         return new NextResponse('Internal Server Error', { status: 500 });
     } finally {
         await prisma.$disconnect();
@@ -63,6 +64,7 @@ export async function GET(req: Request) {
         return NextResponse.json(user);
     } catch (error) {
         console.error('Error getting profile:', error);
+
         return new NextResponse('Internal Server Error', { status: 500 });
     } finally {
         await prisma.$disconnect();

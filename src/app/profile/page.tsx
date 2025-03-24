@@ -9,8 +9,14 @@ import Logo from '../components/Logo';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Label } from "@/registry/new-york-v4/ui/label";
-import MapboxSearch from '../components/MapboxSearch';
+import dynamic from 'next/dynamic';
 import { toast } from "sonner";
+
+// Import MapboxSearch component dynamically with SSR disabled
+const MapboxSearch = dynamic(
+  () => import('../components/MapboxSearch'),
+  { ssr: false }
+);
 
 export default function ProfilePage() {
     const { data: session, update } = useSession();

@@ -10,7 +10,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
         const session = await getServerSession(authOptions);
         
         if (!session) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            return new Response('Unauthorized', { status: 401 });
         }
 
         const { status } = await req.json();
@@ -30,6 +30,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
         return NextResponse.json(request);
     } catch (error) {
         console.error('Error updating request status:', error);
+
         return NextResponse.json(
             { error: 'Internal server error' },
             { status: 500 }

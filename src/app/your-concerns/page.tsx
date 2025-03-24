@@ -112,6 +112,7 @@ export default function YourConcernsPage() {
                                 <div className='space-y-4'>
                                     {pollData.map((item, index) => {
                                         const IconComponent = item.icon;
+
                                         return (
                                             <div key={index} className='bg-white rounded-lg p-4 shadow-sm'>
                                                 <div className='flex items-center mb-2'>
