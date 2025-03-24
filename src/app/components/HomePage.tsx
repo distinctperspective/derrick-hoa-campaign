@@ -25,6 +25,8 @@ const HomePage: React.FC = () => {
                             sizes="100vw"
                             className='object-cover'
                             priority
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEhgJAi5qj4AAAAABJRU5ErkJggg=="
                         />
                         <div className='absolute inset-0 bg-black/60' />
                     </div>
@@ -169,6 +171,8 @@ const HomePage: React.FC = () => {
                         alt="Grand Central Park Logo"
                         width={140}
                         height={140}
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEhgJAi5qj4AAAAABJRU5ErkJggg=="
                       />
                     </div>
                     
@@ -180,6 +184,8 @@ const HomePage: React.FC = () => {
                             fill
                             sizes="100vw"
                             className='object-cover'
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEhgJAi5qj4AAAAABJRU5ErkJggg=="
                         />
                         <div className='absolute inset-0 bg-black/60' />
                     </div>

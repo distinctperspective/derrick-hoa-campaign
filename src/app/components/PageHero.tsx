@@ -20,6 +20,8 @@ const PageHero: React.FC<PageHeroProps> = ({ title, subtitle, imageSrc, imageAlt
                     sizes="100vw"
                     className={`object-cover scale-x-[-1] object-[${objectPosition}]`}
                     priority
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEhgJAi5qj4AAAAABJRU5ErkJggg=="
                 />
                 <div className='absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-black/30' />
             </div>
