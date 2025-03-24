@@ -5,8 +5,10 @@ import localFont from 'next/font/local';
 import { Mr_Dafoe } from 'next/font/google';
 
 import { ThemeProvider } from 'next-themes';
+import { Providers } from './providers';
 
-import '@/app/globals.css';
+import './globals.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { Toaster } from '@/registry/new-york-v4/ui/sonner';
 
 const geistSans = localFont({
@@ -38,8 +40,10 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
             <body
                 className={`${geistSans.variable} ${geistMono.variable} ${mrDafoe.variable} bg-background text-foreground overscroll-none antialiased`}>
                 <ThemeProvider attribute='class'>
-                    {children}
-                    <Toaster />
+                    <Providers>
+                        {children}
+                        <Toaster />
+                    </Providers>
                 </ThemeProvider>
             </body>
         </html>
