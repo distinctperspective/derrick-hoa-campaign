@@ -43,6 +43,9 @@ const Navbar = () => {
                         <Link href="/financials" className='text-white font-extrabold uppercase tracking-wide hover:text-gray-200 transition-colors'>
                             Financials
                         </Link>
+                        <Link href="/faqs" className='text-white font-extrabold uppercase tracking-wide hover:text-gray-200 transition-colors'>
+                            FAQs
+                        </Link>
                         <Link href="/request" className='text-white font-extrabold uppercase tracking-wide hover:text-gray-200 transition-colors'>
                             Contact Me
                         </Link>
@@ -209,6 +212,13 @@ const Navbar = () => {
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         Financials
+                                    </Link>
+                                    <Link 
+                                        href="/faqs" 
+                                        className='block text-white font-extrabold uppercase tracking-wide hover:text-gray-200 transition-colors py-2'
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        FAQs
                                     </Link>
                                     <Link 
                                         href="/request" 

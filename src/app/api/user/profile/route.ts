@@ -21,9 +21,11 @@ export async function PUT(req: Request) {
                 email: session.user.email,
             },
             data: {
+                name: data.displayName, // Add support for updating display name
                 address: data.address,
                 bio: data.bio,
                 phoneNumber: data.phoneNumber,
+                isResident: data.address ? true : undefined, // Set isResident to true if address is provided
             },
         });
 
@@ -51,9 +53,11 @@ export async function GET(req: Request) {
                 email: session.user.email,
             },
             select: {
+                name: true,
                 address: true,
                 bio: true,
                 phoneNumber: true,
+                isResident: true,
             },
         });
 

@@ -107,6 +107,12 @@ const HomePage: React.FC = () => {
                                     >
                                         My Vision
                                     </Link>
+                                    <Link
+                                        href='/endorse-derrick-for-gcphoa'
+                                        className='rounded-full bg-[#0B3558] px-6 py-3 text-white hover:bg-[#0B3558]/90 transition-colors font-extrabold uppercase tracking-wide'
+                                    >
+                                        Endorse Me
+                                    </Link>
                                     <a
                                         href='https://grandcentralpark.ivotehoa.com/login'
                                         target='_blank'
