@@ -27,8 +27,10 @@ export async function GET(
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    // Get the request ID from the URL params
-    const { id } = params;
+    // Get the request ID from the URL
+    const url = request.url;
+    const urlParts = url.split('/');
+    const id = urlParts[urlParts.length - 1]; // Get the ID from the URL path
 
     // Fetch the request with user information and replies
     const requestData = await prisma.request.findUnique({

@@ -10,6 +10,11 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+    // Get the ID from the URL instead of params
+    const url = request.url;
+    const urlParts = url.split('/');
+    const requestId = urlParts[urlParts.length - 2]; // Get the ID from the URL path
+    
     // Get the session
     const session = await getServerSession(authOptions);
 
@@ -27,12 +32,9 @@ export async function DELETE(
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    // Get the request ID from the URL params
-    const { id } = params;
-
     // Delete the request (this will cascade delete all replies due to the relation)
     await prisma.request.delete({
-      where: { id },
+      where: { id: requestId },
     });
 
     return NextResponse.json({ success: true });

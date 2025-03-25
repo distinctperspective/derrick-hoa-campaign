@@ -5,10 +5,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest) {
   try {
     // Get the session
     const session = await getServerSession(authOptions);
@@ -18,8 +15,10 @@ export async function POST(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Get the request ID from the URL params
-    const { id } = params;
+    // Get the request ID from the URL
+    const url = request.url;
+    const urlParts = url.split('/');
+    const id = urlParts[urlParts.length - 2]; // Get the ID from the URL path
 
     // Get the reply content from the request body
     const { content } = await request.json();

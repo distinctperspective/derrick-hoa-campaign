@@ -10,6 +10,11 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+    // Get the ID from the URL instead of params
+    const url = request.url;
+    const urlParts = url.split('/');
+    const replyId = urlParts[urlParts.length - 2]; // Get the ID from the URL path
+    
     // Get the session
     const session = await getServerSession(authOptions);
 
@@ -27,12 +32,9 @@ export async function DELETE(
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    // Get the reply ID from the URL params
-    const { id } = params;
-
     // Get the reply to find its parent request
     const reply = await prisma.reply.findUnique({
-      where: { id },
+      where: { id: replyId },
       select: { requestId: true },
     });
 
@@ -42,7 +44,7 @@ export async function DELETE(
 
     // Delete the reply
     await prisma.reply.delete({
-      where: { id },
+      where: { id: replyId },
     });
 
     // Fetch the updated request with replies
