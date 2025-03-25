@@ -204,6 +204,34 @@ export default function AboutPage() {
                     </div>
                 </div>
 
+                {/* CTA Section - Orange Background */}
+                <div className='mb-16 w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-[#E85C41] py-12'>
+                    <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+                        <div className='md:flex items-center justify-between'>
+                            <div className='md:w-1/2 mb-8 md:mb-0 md:pr-8'>
+                                <h2 className='text-2xl sm:text-3xl font-bold text-white mb-4'>Have Questions or Want to Show Support?</h2>
+                                <p className='text-white/90 text-lg mb-0'>
+                                    Learn more about my campaign or add your name to the growing list of community members who support my vision for Grand Central Park.
+                                </p>
+                            </div>
+                            <div className='md:w-1/2 flex flex-col sm:flex-row items-center justify-center sm:justify-end gap-4'>
+                                <Link 
+                                    href='/faqs' 
+                                    className='w-full sm:w-auto inline-block text-center bg-white hover:bg-gray-100 text-[#E85C41] font-bold py-3 px-8 rounded-full transition-colors'
+                                >
+                                    View FAQs
+                                </Link>
+                                <Link 
+                                    href='/endorse-derrick-for-gcphoa' 
+                                    className='w-full sm:w-auto inline-block text-center bg-[#0B3558] hover:bg-[#0B3558]/90 text-white font-bold py-3 px-8 rounded-full transition-colors'
+                                >
+                                    Endorse My Campaign
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Contact Information */}
                 <div>
                     <h2 className='text-2xl sm:text-3xl font-bold text-[#0B3558] mb-8'>Let's Connect</h2>
