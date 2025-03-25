@@ -106,8 +106,8 @@ const EndorsementCarousel = () => {
     }
 
     return (
-        <div className="relative max-w-3xl mx-auto px-4 py-8">
-            <div className="flex justify-between items-center mb-6">
+        <div className="relative max-w-3xl mx-auto px-4">
+            <div className="flex justify-between items-center">
                 <button 
                     onClick={handlePrev}
                     className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
@@ -137,7 +137,8 @@ const EndorsementCarousel = () => {
                 </button>
             </div>
             
-            <div className="flex justify-center gap-1">
+            {/* Navigation dots centered below the carousel */}
+            <div className="flex justify-center gap-1 mt-4 mb-0">
                 {endorsements.map((_, index) => (
                     <button
                         key={index}

@@ -13,9 +13,11 @@ import {
 import EndorsementCarousel from './EndorsementCarousel';
 import { useState } from 'react';
 import EndorsementModal from './EndorsementModal';
+import { useSession } from 'next-auth/react';
 
 const HomePage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { data: session } = useSession();
 
     const handleEndorsementSubmit = async (message: string) => {
         try {
@@ -370,15 +372,15 @@ const HomePage: React.FC = () => {
                         
                         <EndorsementCarousel />
                         
-                        <div className="text-center mt-12">
-                            <p className="text-sm text-gray-500 italic mb-6 max-w-4xl mx-auto">
+                        <div className="text-center mt-2">
+                            <p className="text-sm text-gray-500 italic mb-4 max-w-4xl mx-auto">
                                 All endorsements are confidential. Only street names and initials are disclosed to protect residents' privacy.
                             </p>
                             <button
                                 onClick={() => setIsModalOpen(true)}
                                 className="inline-flex items-center rounded-full bg-[#0B3558] px-6 py-3 text-white hover:bg-[#0B3558]/90 transition-colors font-bold"
                             >
-                                Endorse My Campaign
+                                {session ? "Endorse My Campaign" : "Login to Endorse Me"}
                             </button>
                             
                             {isModalOpen && (
