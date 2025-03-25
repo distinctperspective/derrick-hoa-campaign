@@ -23,3 +23,11 @@ export const metadata: Metadata = {
         images: ['/images/hoa-meeting.jpeg'],
     }
 };
+
+export default function YourConcernsLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    return <>{children}</>;
+}
