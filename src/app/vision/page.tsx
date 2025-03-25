@@ -3,6 +3,31 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
 import { Leaf, Shield, Home, Users, Target, Clock, Building, DollarSign } from 'lucide-react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'My Vision for Grand Central Park | Derrick Threatt for GCP RAI',
+    description: 'Learn about Derrick Threatt\'s vision for Grand Central Park - preserving our natural haven while building a close-knit community and protecting home equity.',
+    keywords: ['Derrick Threatt', 'Grand Central Park', 'GCP', 'RAI', 'Vision', 'Community', 'HOA', 'Board Member'],
+    openGraph: {
+        title: 'My Vision for Grand Central Park | Derrick Threatt for GCP RAI',
+        description: 'Learn about Derrick Threatt\'s vision for Grand Central Park - preserving our natural haven while building a close-knit community and protecting home equity.',
+        images: [
+            {
+                url: '/images/lakehouse.jpeg',
+                width: 1200,
+                height: 630,
+                alt: 'Grand Central Park Lakehouse'
+            }
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'My Vision for Grand Central Park | Derrick Threatt for GCP RAI',
+        description: 'Learn about Derrick Threatt\'s vision for Grand Central Park - preserving our natural haven while building a close-knit community and protecting home equity.',
+        images: ['/images/lakehouse.jpeg'],
+    }
+};
 
 export default function VisionPage() {
     return (

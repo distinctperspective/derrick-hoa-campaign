@@ -14,6 +14,31 @@ import {
     BarChart3,
     ClipboardList 
 } from 'lucide-react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Financial Analysis | Derrick Threatt for GCP RAI',
+    description: 'Review Derrick Threatt\'s analysis of Grand Central Park RAI\'s financial health, budget breakdown, and financial management strategies.',
+    keywords: ['Derrick Threatt', 'Grand Central Park', 'GCP', 'RAI', 'Financials', 'Budget', 'HOA Dues', 'Financial Management'],
+    openGraph: {
+        title: 'Financial Analysis | Derrick Threatt for GCP RAI',
+        description: 'Review Derrick Threatt\'s analysis of Grand Central Park RAI\'s financial health, budget breakdown, and financial management strategies.',
+        images: [
+            {
+                url: '/images/accounting.jpg',
+                width: 1200,
+                height: 630,
+                alt: 'Financial Background'
+            }
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Financial Analysis | Derrick Threatt for GCP RAI',
+        description: 'Review Derrick Threatt\'s analysis of Grand Central Park RAI\'s financial health, budget breakdown, and financial management strategies.',
+        images: ['/images/accounting.jpg'],
+    }
+};
 
 export const dynamic = 'force-static';
 

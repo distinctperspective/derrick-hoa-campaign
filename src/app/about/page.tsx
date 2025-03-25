@@ -4,6 +4,31 @@ import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
 import Link from 'next/link';
 import { Briefcase, GraduationCap, Home, Heart, Users, Star, Globe, Code, ChartBar, Building2, DollarSign, MessageSquare, Lightbulb } from 'lucide-react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'About Derrick Threatt | Candidate for GCP RAI Board',
+    description: 'Learn about Derrick Threatt - a technology leader, community advocate, and candidate for the Grand Central Park Residential Association Inc. Board.',
+    keywords: ['Derrick Threatt', 'Grand Central Park', 'GCP', 'RAI', 'Board Member', 'About', 'Biography', 'Leadership', 'Military Service'],
+    openGraph: {
+        title: 'About Derrick Threatt | Candidate for GCP RAI Board',
+        description: 'Learn about Derrick Threatt - a technology leader, community advocate, and candidate for the Grand Central Park Residential Association Inc. Board.',
+        images: [
+            {
+                url: '/images/family.jpeg',
+                width: 1200,
+                height: 630,
+                alt: 'Derrick Threatt with Family'
+            }
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'About Derrick Threatt | Candidate for GCP RAI Board',
+        description: 'Learn about Derrick Threatt - a technology leader, community advocate, and candidate for the Grand Central Park Residential Association Inc. Board.',
+        images: ['/images/family.jpeg'],
+    }
+};
 
 export default function AboutPage() {
     return (
