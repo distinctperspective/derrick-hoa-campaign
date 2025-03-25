@@ -95,7 +95,19 @@ const faqs: FAQItem[] = [
     },
     {
         question: "How can I support your campaign?",
-        answer: "The most important way to support my campaign is to vote! You can also help by sharing my campaign information with your neighbors, providing your endorsement on my website, and reaching out with your ideas and concerns. Together, we can build the community we all want to call home."
+        answer: (
+            <div className="space-y-4">
+                <p>The most important way to support my campaign is to vote! You can also help by sharing my campaign information with your neighbors, providing your endorsement on my website, and reaching out with your ideas and concerns. Together, we can build the community we all want to call home.</p>
+                <div>
+                    <a 
+                        href="/endorse-derrick-for-gcphoa" 
+                        className="inline-block bg-[#E85C41] hover:bg-[#E85C41]/90 text-white font-bold py-2 px-5 rounded-full transition-colors"
+                    >
+                        Endorse Me
+                    </a>
+                </div>
+            </div>
+        )
     }
 ];
 
