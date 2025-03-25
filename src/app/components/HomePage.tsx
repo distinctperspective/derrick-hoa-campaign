@@ -59,7 +59,7 @@ const HomePage: React.FC = () => {
                     {/* Background Image */}
                     <div className='absolute inset-0 w-full h-full'>
                         <Image
-                            src='/images/hero-background.jpg'
+                            src='/images/optimized/hero-background.jpg'
                             alt='Grand Central Park'
                             fill
                             sizes="100vw"
@@ -123,7 +123,7 @@ const HomePage: React.FC = () => {
                                 <div className='relative h-72 w-72 sm:h-80 sm:w-80 lg:h-96 lg:w-96'>
                                     <div className='absolute inset-0 rounded-2xl bg-black/10'></div>
                                     <Image
-                                        src='/images/derrick.jpg'
+                                        src='/images/optimized/derrick.jpg'
                                         alt='Derrick Threatt - Candidate for Grand Central Park RAI Board'
                                         fill
                                         sizes="(max-width: 640px) 288px, (max-width: 768px) 320px, (max-width: 1024px) 384px, 384px"
@@ -207,7 +207,7 @@ const HomePage: React.FC = () => {
                     {/* GCP Logo - Positioned at the top of Vision section */}
                     <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
                       <Image
-                        src="/images/gcp-logo.png"
+                        src="/images/optimized/gcp-logo.png"
                         alt="Grand Central Park Logo"
                         width={140}
                         height={140}
@@ -219,7 +219,7 @@ const HomePage: React.FC = () => {
                     {/* Background Image */}
                     <div className='absolute inset-0 w-full h-full'>
                         <Image
-                            src='/images/community.jpg'
+                            src='/images/optimized/community.jpg'
                             alt='Grand Central Park Community'
                             fill
                             sizes="100vw"

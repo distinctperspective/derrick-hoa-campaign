@@ -88,6 +88,33 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
         // ? https://github.com/pacocoursey/next-themes?tab=readme-ov-file#with-app
         // ? https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors
         <html suppressHydrationWarning lang='en'>
+            <head>
+                {/* Preload critical images */}
+                <link
+                    rel="preload"
+                    href="/images/optimized/hero-background.jpg"
+                    as="image"
+                    type="image/jpeg"
+                />
+                <link
+                    rel="preload"
+                    href="/images/optimized/derrick.jpg"
+                    as="image"
+                    type="image/jpeg"
+                />
+                <link
+                    rel="preload"
+                    href="/images/optimized/dtlogo.png"
+                    as="image"
+                    type="image/png"
+                />
+                <link
+                    rel="preload"
+                    href="/images/optimized/gcp-logo.png"
+                    as="image"
+                    type="image/png"
+                />
+            </head>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} ${mrDafoe.variable} bg-background text-foreground overscroll-none antialiased`}>
                 <ThemeProvider attribute='class'>
