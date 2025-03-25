@@ -13,7 +13,8 @@ import {
   User,
   ChevronDown,
   Menu,
-  Shield
+  Shield,
+  HelpCircle
 } from 'lucide-react';
 
 export default function AdminLayout({
@@ -55,6 +56,7 @@ export default function AdminLayout({
   const navItems = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { name: 'Endorsements', href: '/admin/approve-endorsements', icon: MessageSquare },
+    { name: 'Requests', href: '/admin/requests', icon: HelpCircle },
     { name: 'Users', href: '/admin/users', icon: Users },
     { name: 'Settings', href: '/admin/settings', icon: Settings },
   ];
