@@ -8,7 +8,8 @@ import Link from 'next/link';
 // Construct the absolute URL for the OG image
 const title = 'Frequently Asked Questions | Derrick Threatt for GCP HOA';
 const subtitle = 'Find answers to common questions about my campaign and vision for our community';
-const ogImageUrl = `/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://derrickforgcphoa.com';
+const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
 
 export const metadata: Metadata = {
     title: title,
