@@ -114,23 +114,26 @@ export async function GET(request: NextRequest) {
           >
             <h1
               style={{
-                fontSize: 60,
-                fontWeight: 900,
+                fontSize: 70,
+                fontWeight: 'bold',
                 color: 'white',
-                lineHeight: 1.2,
+                lineHeight: 1.1,
                 marginBottom: 20,
                 width: '100%',
+                textShadow: '0 2px 8px rgba(0,0,0,0.8), 0 0 1px white',
+                letterSpacing: '-1px',
               }}
             >
               {title}
             </h1>
             <p
               style={{
-                fontSize: 30,
-                fontWeight: 700,
-                color: '#E6E6E6',
-                lineHeight: 1.4,
+                fontSize: 36,
+                fontWeight: 'bold',
+                color: 'white',
+                lineHeight: 1.3,
                 width: '100%',
+                textShadow: '0 2px 8px rgba(0,0,0,0.8), 0 0 1px white',
               }}
             >
               {subtitle}
