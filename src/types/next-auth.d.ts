@@ -11,6 +11,7 @@ declare module 'next-auth' {
             bio?: string | null;
             phoneNumber?: string | null;
             isResident?: boolean | null;
+            isAdmin?: boolean | null;
         };
     }
 }

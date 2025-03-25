@@ -85,6 +85,14 @@ const Navbar = () => {
                                     >
                                         <span className="font-extrabold uppercase tracking-wide">Profile</span>
                                     </DropdownMenuItem>
+                                    {session.user?.isAdmin && (
+                                        <DropdownMenuItem 
+                                            className="cursor-pointer focus:bg-white/10 focus:text-white"
+                                            onClick={() => router.push('/admin')}
+                                        >
+                                            <span className="font-extrabold uppercase tracking-wide">Admin</span>
+                                        </DropdownMenuItem>
+                                    )}
                                     <DropdownMenuItem 
                                         className="cursor-pointer focus:bg-white/10 focus:text-white"
                                         onClick={() => signOut()}
@@ -216,6 +224,15 @@ const Navbar = () => {
                                             onClick={() => setIsMenuOpen(false)}
                                         >
                                             Profile
+                                        </Link>
+                                    )}
+                                    {session?.user?.isAdmin && (
+                                        <Link 
+                                            href="/admin" 
+                                            className='block text-white font-extrabold uppercase tracking-wide hover:text-gray-200 transition-colors py-2'
+                                            onClick={() => setIsMenuOpen(false)}
+                                        >
+                                            Admin
                                         </Link>
                                     )}
                                     {!session && (

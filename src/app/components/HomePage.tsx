@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import Footer from './Footer';
@@ -8,8 +10,44 @@ import {
     DollarSign,
     Phone
 } from 'lucide-react';
+import EndorsementCarousel from './EndorsementCarousel';
+import { useState } from 'react';
+import EndorsementModal from './EndorsementModal';
 
 const HomePage: React.FC = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleEndorsementSubmit = async (message: string) => {
+        try {
+            const response = await fetch('/api/endorsements', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to submit endorsement');
+            }
+
+            // Close modal after successful submission
+            setTimeout(() => {
+                setIsModalOpen(false);
+            }, 3000); // Close after 3 seconds to allow user to see success message
+            
+            return await response.json();
+        } catch (error) {
+            console.error('Error submitting endorsement:', error);
+            if (error instanceof Error) {
+                throw error;
+            } else {
+                throw new Error('An unexpected error occurred');
+            }
+        }
+    };
+
     return (
         <div className='min-h-screen flex flex-col'>
             <Navbar />
@@ -316,6 +354,40 @@ const HomePage: React.FC = () => {
                                     </svg>
                                 </Link>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Endorsements Section */}
+                <div className="py-16 bg-gray-50">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-8">
+                            <h2 className="text-3xl font-bold text-[#0B3558] mb-2">Resident Endorsements</h2>
+                            <p className="text-gray-600 max-w-2xl mx-auto">
+                                Hear from your neighbors about why they support my candidacy for the first resident board member position.
+                            </p>
+                        </div>
+                        
+                        <EndorsementCarousel />
+                        
+                        <div className="text-center mt-12">
+                            <p className="text-sm text-gray-500 italic mb-6 max-w-4xl mx-auto">
+                                All endorsements are confidential. Only street names and initials are disclosed to protect residents' privacy.
+                            </p>
+                            <button
+                                onClick={() => setIsModalOpen(true)}
+                                className="inline-flex items-center rounded-full bg-[#0B3558] px-6 py-3 text-white hover:bg-[#0B3558]/90 transition-colors font-bold"
+                            >
+                                Endorse My Campaign
+                            </button>
+                            
+                            {isModalOpen && (
+                                <EndorsementModal
+                                    isOpen={isModalOpen}
+                                    onClose={() => setIsModalOpen(false)}
+                                    onSubmit={handleEndorsementSubmit}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>

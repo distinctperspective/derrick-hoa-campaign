@@ -18,7 +18,8 @@ const PageHero: React.FC<PageHeroProps> = ({ title, subtitle, imageSrc, imageAlt
                     alt={imageAlt}
                     fill
                     sizes="100vw"
-                    className={`object-cover scale-x-[-1] object-[${objectPosition}]`}
+                    className="object-cover scale-x-[-1]"
+                    style={{ objectPosition }}
                     priority
                     placeholder="blur"
                     blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEhgJAi5qj4AAAAABJRU5ErkJggg=="

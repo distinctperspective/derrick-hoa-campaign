@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
+import Link from 'next/link';
 import { Briefcase, GraduationCap, Home, Heart, Users, Star, Globe, Code, ChartBar, Building2, DollarSign, MessageSquare, Lightbulb } from 'lucide-react';
 
 export default function AboutPage() {
@@ -14,6 +15,7 @@ export default function AboutPage() {
                 subtitle="A Technology Leader & Community Advocate"
                 imageSrc="/images/family.jpeg"
                 imageAlt="Derrick Threatt with Family"
+                objectPosition="top -50px"
             />
 
             <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20'>
@@ -192,12 +194,12 @@ export default function AboutPage() {
                                 >
                                     Call: +1 936 251 5911
                                 </a>
-                                <a 
-                                    href='mailto:dthreatt@digitalcreations.net'
+                                <Link 
+                                    href='/request'
                                     className='inline-flex items-center rounded-full bg-[#0B3558] px-6 py-3 text-white hover:bg-[#0B3558]/90 transition-colors font-bold'
                                 >
-                                    Email Me
-                                </a>
+                                    Contact Me
+                                </Link>
                             </div>
                         </div>
                     </div>

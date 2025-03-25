@@ -7,13 +7,13 @@ import Logo from './Logo';
 
 export default function LoginWall() {
     return (
-        <div className="min-h-[calc(100vh-6rem)] flex flex-col items-center justify-center relative px-4 bg-[url('/images/lakehouse.jpeg')] bg-cover bg-center">
+        <div className="min-h-screen flex flex-col items-center justify-center relative px-4 bg-[url('/images/lakehouse.jpeg')] bg-cover bg-center">
             <div className="absolute inset-0 bg-black/50" />
             <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-10">
                 <Logo className="w-[200px] h-auto" />
             </div>
             
-            <div className="max-w-2xl w-full text-center space-y-8 bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-lg mt-24 relative z-10">
+            <div className="max-w-2xl w-full text-center space-y-8 bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-lg mt-24 relative z-10 mb-12">
                 <h1 className="text-4xl font-bold text-[#0B3558]">
                     Please Sign In
                 </h1>

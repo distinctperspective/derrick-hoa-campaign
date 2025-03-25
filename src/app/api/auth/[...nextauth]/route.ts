@@ -45,6 +45,7 @@ export const authOptions: NextAuthOptions = {
                             bio: true,
                             phoneNumber: true,
                             isResident: true,
+                            isAdmin: true,
                         },
                     });
                     
