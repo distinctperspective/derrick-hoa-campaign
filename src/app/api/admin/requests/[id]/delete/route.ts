@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { PrismaClient } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 
+// Create a single PrismaClient instance and reuse it
 const prisma = new PrismaClient();
 
 export async function DELETE(
@@ -23,12 +25,9 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Check if user is an admin
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email as string },
-    });
-
-    if (!user?.isAdmin) {
+    // Check if user is an admin directly from the session
+    // This avoids an extra database query
+    if (!(session.user as any).isAdmin) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
@@ -37,6 +36,10 @@ export async function DELETE(
       where: { id: requestId },
     });
 
+    // Revalidate the admin requests page
+    revalidatePath('/admin/requests');
+
+    // Return just the success status
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting request:', error);
@@ -44,7 +47,5 @@ export async function DELETE(
       { error: 'Failed to delete request' },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

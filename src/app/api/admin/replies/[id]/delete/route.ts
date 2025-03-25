@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { PrismaClient } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 
+// Create a single PrismaClient instance and reuse it
 const prisma = new PrismaClient();
 
 export async function DELETE(
@@ -23,12 +25,9 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Check if user is an admin
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email as string },
-    });
-
-    if (!user?.isAdmin) {
+    // Check if user is an admin directly from the session
+    // This avoids an extra database query
+    if (!(session.user as any).isAdmin) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
@@ -47,35 +46,21 @@ export async function DELETE(
       where: { id: replyId },
     });
 
-    // Fetch the updated request with replies
-    const updatedRequest = await prisma.request.findUnique({
-      where: { id: reply.requestId },
-      include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
-            address: true,
-          },
-        },
-        replies: {
-          orderBy: {
-            createdAt: 'asc',
-          },
-        },
-      },
-    });
+    // Revalidate the admin requests page and the specific request page
+    revalidatePath('/admin/requests');
+    revalidatePath(`/admin/requests/${reply.requestId}`);
 
-    return NextResponse.json(updatedRequest);
+    // Return just the success status and requestId
+    // This is much faster than fetching the entire request with all replies
+    return NextResponse.json({ 
+      success: true,
+      requestId: reply.requestId
+    });
   } catch (error) {
     console.error('Error deleting reply:', error);
     return NextResponse.json(
       { error: 'Failed to delete reply' },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
