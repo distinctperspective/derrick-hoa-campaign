@@ -16,7 +16,7 @@ export function generateOgMetadata({
   // Construct the absolute URL for the OG image
   const baseUrl = process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : (process.env.NEXTAUTH_URL || 'https://gcphoatx.com');
+    : 'https://www.gcphoatx.com';
     
   const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
 
@@ -35,12 +35,16 @@ export function generateOgMetadata({
           alt: title
         }
       ],
+      siteName: 'Derrick Threatt for GCP RAI',
+      locale: 'en_US',
+      type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
       images: [ogImageUrl],
+      creator: '@derrickthreatt',
     }
   };
 }
