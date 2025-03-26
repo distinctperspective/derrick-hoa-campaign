@@ -14,11 +14,10 @@ export function generateOgMetadata({
   keywords = [],
 }: GenerateOgMetadataProps): Metadata {
   // Construct the absolute URL for the OG image
-  const baseUrl = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : 'https://gcphoatx.com';
-    
-  const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
+  const baseUrl = process.env.NEXTAUTH_URL || 'https://gcphoatx.com';
+  
+  // Ensure baseUrl is a valid URL by using the URL constructor
+  const ogImageUrl = new URL('/api/og', baseUrl).toString() + `?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
 
   return {
     title,
