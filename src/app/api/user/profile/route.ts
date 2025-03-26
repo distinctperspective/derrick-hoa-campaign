@@ -21,7 +21,7 @@ export async function PUT(req: Request) {
                 email: session.user.email,
             },
             data: {
-                name: data.displayName, // Add support for updating display name
+                name: data.name,
                 address: data.address,
                 bio: data.bio,
                 phoneNumber: data.phoneNumber,

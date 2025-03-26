@@ -25,7 +25,7 @@ export default function EndorsementForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [formData, setFormData] = useState({
-        displayName: '',
+        name: '',
         email: '',
         address: '',
         phoneNumber: '',
@@ -37,7 +37,7 @@ export default function EndorsementForm() {
         if (session?.user) {
             setFormData(prev => ({
                 ...prev,
-                displayName: session.user.name || '',
+                name: session.user.name || '',
                 email: session.user.email || '',
                 address: (session.user as any).address || '',
                 phoneNumber: (session.user as any).phoneNumber || ''
@@ -73,13 +73,13 @@ export default function EndorsementForm() {
         try {
             // First update user profile if needed
             if (formData.address || formData.phoneNumber || 
-                (formData.displayName && formData.displayName !== session.user.name)) {
+                (formData.name && formData.name !== session.user.name)) {
                 
                 const profileResponse = await fetch('/api/user/profile', {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        displayName: formData.displayName,
+                        name: formData.name,
                         address: formData.address,
                         phoneNumber: formData.phoneNumber
                     })
@@ -94,7 +94,7 @@ export default function EndorsementForm() {
                     ...session,
                     user: {
                         ...session.user,
-                        name: formData.displayName,
+                        name: formData.name,
                         address: formData.address,
                         phoneNumber: formData.phoneNumber
                     }
@@ -106,8 +106,7 @@ export default function EndorsementForm() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    message: formData.message,
-                    displayName: formData.displayName
+                    message: formData.message
                 })
             });
             
@@ -180,11 +179,11 @@ export default function EndorsementForm() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-4">
                         <div>
-                            <Label htmlFor="displayName" className={labelClassName}>Display Name</Label>
+                            <Label htmlFor="name" className={labelClassName}>Your Name</Label>
                             <Input
-                                id="displayName"
-                                name="displayName"
-                                value={formData.displayName}
+                                id="name"
+                                name="name"
+                                value={formData.name}
                                 onChange={handleChange}
                                 placeholder="Your full name"
                                 required

@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { X } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
+import { generateDisplayName } from '../utils/generateDisplayName';
 
 interface EndorsementModalProps {
     isOpen: boolean;
@@ -125,36 +126,10 @@ export default function EndorsementModal({ isOpen, onClose, onSubmit }: Endorsem
         );
     }
 
-    // Extract street name and initials for display
-    let displayName = '';
-    if (session?.user) {
-        // Extract street name from address
-        let streetName = 'Resident';
-        if (session.user.address) {
-            const addressParts = session.user.address.split(',');
-            if (addressParts.length > 0) {
-                const firstPart = addressParts[0].trim();
-                // Extract street name (remove house number)
-                const streetMatch = firstPart.match(/\d+\s+(.+)/);
-                if (streetMatch && streetMatch[1]) {
-                    streetName = streetMatch[1];
-                }
-            }
-        }
-        
-        // Get user initials
-        let initials = '';
-        if (session.user.name) {
-            const nameParts = session.user.name.split(' ');
-            if (nameParts.length >= 2) {
-                initials = `${nameParts[0][0]}.${nameParts[nameParts.length - 1][0]}.`;
-            } else if (nameParts.length === 1) {
-                initials = `${nameParts[0][0]}.`;
-            }
-        }
-        
-        displayName = `Resident on ${streetName} - ${initials}`;
-    }
+    // Get display name using utility function
+    const displayName = session?.user 
+        ? generateDisplayName(session.user.name, session.user.address)
+        : '';
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">

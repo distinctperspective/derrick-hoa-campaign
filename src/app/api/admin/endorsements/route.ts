@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../../auth/[...nextauth]/route';
 import { PrismaClient } from '@prisma/client';
+import { generateDisplayName } from '../../../utils/generateDisplayName';
 
 // Create a new instance of PrismaClient for this API route
 const prisma = new PrismaClient();
@@ -35,7 +36,7 @@ export async function GET() {
             id: e.id,
             userId: e.userId,
             message: e.message,
-            displayName: e.displayName,
+            displayName: generateDisplayName(e.userName, e.userAddress),
             isApproved: e.isApproved,
             createdAt: e.createdAt,
             user: {

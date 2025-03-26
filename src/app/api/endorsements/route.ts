@@ -2,22 +2,35 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]/route';
 import { PrismaClient } from '@prisma/client';
+import { generateDisplayName } from '../../utils/generateDisplayName';
 
 // Create a new instance of PrismaClient for this API route
 const prisma = new PrismaClient();
 
 export async function GET() {
     try {
-        // Get approved endorsements using direct SQL query
+        // Get approved endorsements with user data using direct SQL query
         const endorsements = await prisma.$queryRaw`
-            SELECT * FROM "Endorsement" 
-            WHERE "isApproved" = true 
-            ORDER BY "createdAt" DESC
+            SELECT e.*, 
+                   u.id as "userId", 
+                   u.name as "userName", 
+                   u.email as "userEmail", 
+                   u.address as "userAddress"
+            FROM "Endorsement" e
+            LEFT JOIN "User" u ON e."userId" = u.id
+            WHERE e."isApproved" = true 
+            ORDER BY e."createdAt" DESC
         `;
         
-        console.log('Fetched endorsements from DB:', endorsements);
+        // Format the endorsements with calculated display name
+        const formattedEndorsements = (endorsements as any[]).map(e => ({
+            ...e,
+            displayName: generateDisplayName(e.userName, e.userAddress)
+        }));
         
-        return NextResponse.json({ endorsements }, { status: 200 });
+        console.log('Fetched endorsements from DB:', formattedEndorsements);
+        
+        return NextResponse.json({ endorsements: formattedEndorsements }, { status: 200 });
     } catch (error) {
         console.error('Error fetching endorsements:', error);
         return NextResponse.json({ error: 'Failed to fetch endorsements' }, { status: 500 });
@@ -76,13 +89,12 @@ export async function POST(req: NextRequest) {
         
         try {
             // Create the endorsement using direct SQL query
-            const displayName = `Resident on ${streetName} - ${initials}`;
             const userId = session.user.id;
             const isApproved = false;
             
             const result = await prisma.$executeRaw`
-                INSERT INTO "Endorsement" ("id", "userId", "message", "displayName", "isApproved", "createdAt", "updatedAt")
-                VALUES (gen_random_uuid(), ${userId}, ${message}, ${displayName}, ${isApproved}, NOW(), NOW())
+                INSERT INTO "Endorsement" ("id", "userId", "message", "isApproved", "createdAt", "updatedAt")
+                VALUES (gen_random_uuid(), ${userId}, ${message}, ${isApproved}, NOW(), NOW())
                 RETURNING *
             `;
             
