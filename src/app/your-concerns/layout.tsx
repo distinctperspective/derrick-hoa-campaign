@@ -1,28 +1,19 @@
 import { Metadata } from 'next';
+import { generateOgMetadata } from '../utils/generateOgMetadata';
 
-export const metadata: Metadata = {
-    title: 'Community Concerns | Derrick Threatt for GCP RAI',
-    description: 'Learn about the issues that matter most to Grand Central Park residents and Derrick Threatt\'s plans to address these community concerns.',
-    keywords: ['Derrick Threatt', 'Grand Central Park', 'GCP', 'RAI', 'Community Concerns', 'HOA Issues', 'Resident Survey'],
-    openGraph: {
-        title: 'Community Concerns | Derrick Threatt for GCP RAI',
-        description: 'Learn about the issues that matter most to Grand Central Park residents and Derrick Threatt\'s plans to address these community concerns.',
-        images: [
-            {
-                url: '/images/hoa-meeting.jpeg',
-                width: 1200,
-                height: 630,
-                alt: 'HOA Meeting Background'
-            }
-        ],
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Community Concerns | Derrick Threatt for GCP RAI',
-        description: 'Learn about the issues that matter most to Grand Central Park residents and Derrick Threatt\'s plans to address these community concerns.',
-        images: ['/images/hoa-meeting.jpeg'],
-    }
-};
+// Construct the absolute URL for the OG image
+const title = 'Community Concerns | Derrick Threatt for GCP RAI';
+const description = 'Learn about the issues that matter most to Grand Central Park residents and Derrick Threatt\'s plans to address these community concerns.';
+const subtitle = 'Learn about the issues that matter most to Grand Central Park residents';
+const baseUrl = process.env.NEXTAUTH_URL || 'https://gcphoatx.com';
+const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
+
+export const metadata: Metadata = generateOgMetadata({
+    title,
+    description,
+    subtitle,
+    keywords: ['Community Concerns', 'HOA Issues', 'Resident Survey'],
+});
 
 export default function YourConcernsLayout({
     children,

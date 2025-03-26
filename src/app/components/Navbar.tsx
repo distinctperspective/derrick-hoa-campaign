@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { User } from "lucide-react"
-import { Button } from "@/registry/new-york-v4/ui/button"
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import Logo from './Logo';
+import { Button as ShadcnButton } from "@/registry/new-york-v4/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -13,10 +15,10 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/registry/new-york-v4/ui/dropdown-menu"
+} from "@/registry/new-york-v4/ui/dropdown-menu";
+import Button from './Button';
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from 'next/navigation';
-import Logo from './Logo';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,14 +51,16 @@ const Navbar = () => {
                         <Link href="/request" className='text-white font-extrabold uppercase tracking-wide hover:text-gray-200 transition-colors'>
                             Contact Me
                         </Link>
-                        <a 
+                        <Button 
                             href="https://grandcentralpark.ivotehoa.com/login"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className='text-white bg-[#E85C41] hover:bg-[#E85C41]/90 px-6 py-2 rounded-full font-extrabold uppercase tracking-wide transition-colors'
+                            variant="accent"
+                            size="default"
+                            uppercase
                         >
                             Vote Now
-                        </a>
+                        </Button>
                         {session ? (
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -105,12 +109,14 @@ const Navbar = () => {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         ) : (
-                            <button
+                            <Button
                                 onClick={() => signIn('google')}
-                                className='text-white bg-[#40C5B5] hover:bg-[#40C5B5]/90 px-6 py-2 rounded-full font-extrabold uppercase tracking-wide transition-colors'
+                                variant="primary"
+                                size="default"
+                                uppercase
                             >
                                 Login
-                            </button>
+                            </Button>
                         )}
                     </div>
 
@@ -246,36 +252,43 @@ const Navbar = () => {
                                         </Link>
                                     )}
                                     {!session && (
-                                        <button
+                                        <Button
                                             onClick={() => {
                                                 signIn('google');
                                                 setIsMenuOpen(false);
                                             }}
-                                            className='block w-full text-white bg-[#40C5B5] hover:bg-[#40C5B5]/90 px-6 py-2 rounded-full font-extrabold uppercase tracking-wide transition-colors my-2 text-center'
+                                            variant="primary"
+                                            size="default"
+                                            uppercase
                                         >
                                             Login
-                                        </button>
+                                        </Button>
                                     )}
                                     <div className="mt-3 pt-3 border-t border-white/20">
-                                        <a 
+                                        <Button 
                                             href="https://grandcentralpark.ivotehoa.com/login"
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className='block text-white bg-[#E85C41] hover:bg-[#E85C41]/90 px-4 py-2 rounded-full font-extrabold uppercase tracking-wide transition-colors my-2 text-center'
+                                            variant="accent"
+                                            size="default"
+                                            uppercase
+                                            className='w-full'
                                             onClick={() => setIsMenuOpen(false)}
                                         >
                                             Vote Now
-                                        </a>
+                                        </Button>
                                         {session && (
-                                            <button
+                                            <Button
                                                 onClick={() => {
                                                     signOut();
                                                     setIsMenuOpen(false);
                                                 }}
-                                                className='block w-full text-white bg-[#40BFB4] hover:bg-[#40BFB4]/90 px-6 py-2 rounded-full font-extrabold uppercase tracking-wide transition-colors my-2 text-center'
+                                                variant="primary"
+                                                size="default"
+                                                uppercase
                                             >
                                                 Logout
-                                            </button>
+                                            </Button>
                                         )}
                                     </div>
                                 </div>

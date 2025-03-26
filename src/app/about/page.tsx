@@ -5,30 +5,19 @@ import PageHero from '../components/PageHero';
 import Link from 'next/link';
 import { Briefcase, GraduationCap, Home, Heart, Users, Star, Globe, Code, ChartBar, Building2, DollarSign, MessageSquare, Lightbulb } from 'lucide-react';
 import { Metadata } from 'next';
+import Button from '../components/Button';
+import { generateOgMetadata } from '../utils/generateOgMetadata';
 
-export const metadata: Metadata = {
-    title: 'About Derrick Threatt | Candidate for GCP RAI Board',
-    description: 'Learn about Derrick Threatt - a technology leader, community advocate, and candidate for the Grand Central Park Residential Association Inc. Board.',
+const title = 'About Derrick Threatt | Candidate for GCP RAI Board';
+const description = 'Learn about Derrick Threatt - a technology leader, community advocate, and candidate for the Grand Central Park Residential Association Inc. Board.';
+const subtitle = 'A Technology Leader & Community Advocate';
+
+export const metadata: Metadata = generateOgMetadata({
+    title,
+    description,
+    subtitle,
     keywords: ['Derrick Threatt', 'Grand Central Park', 'GCP', 'RAI', 'Board Member', 'About', 'Biography', 'Leadership', 'Military Service'],
-    openGraph: {
-        title: 'About Derrick Threatt | Candidate for GCP RAI Board',
-        description: 'Learn about Derrick Threatt - a technology leader, community advocate, and candidate for the Grand Central Park Residential Association Inc. Board.',
-        images: [
-            {
-                url: '/images/family.jpeg',
-                width: 1200,
-                height: 630,
-                alt: 'Derrick Threatt with Family'
-            }
-        ],
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'About Derrick Threatt | Candidate for GCP RAI Board',
-        description: 'Learn about Derrick Threatt - a technology leader, community advocate, and candidate for the Grand Central Park Residential Association Inc. Board.',
-        images: ['/images/family.jpeg'],
-    }
-};
+});
 
 export default function AboutPage() {
     return (
@@ -215,18 +204,22 @@ export default function AboutPage() {
                                 </p>
                             </div>
                             <div className='md:w-1/2 flex flex-col sm:flex-row items-center justify-center sm:justify-end gap-4'>
-                                <Link 
+                                <Button 
                                     href='/faqs' 
-                                    className='w-full sm:w-auto inline-block text-center bg-white hover:bg-gray-100 text-[#E85C41] font-bold py-3 px-8 rounded-full transition-colors'
+                                    variant="outline"
+                                    size="large"
+                                    className='w-full sm:w-auto'
                                 >
                                     View FAQs
-                                </Link>
-                                <Link 
+                                </Button>
+                                <Button 
                                     href='/endorse-derrick-for-gcphoa' 
-                                    className='w-full sm:w-auto inline-block text-center bg-[#0B3558] hover:bg-[#0B3558]/90 text-white font-bold py-3 px-8 rounded-full transition-colors'
+                                    variant="secondary"
+                                    size="large"
+                                    className='w-full sm:w-auto'
                                 >
                                     Endorse My Campaign
-                                </Link>
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -241,18 +234,20 @@ export default function AboutPage() {
                                 I'm always eager to hear from our community members and discuss how we can work together to improve Grand Central Park.
                             </p>
                             <div className='flex flex-wrap justify-center gap-4'>
-                                <a 
+                                <Button 
                                     href='tel:+19362515911'
-                                    className='inline-flex items-center rounded-full bg-[#40BFB4] px-6 py-3 text-white hover:bg-[#40BFB4]/90 transition-colors font-bold'
+                                    variant="primary"
+                                    size="large"
                                 >
                                     Call: +1 936 251 5911
-                                </a>
-                                <Link 
+                                </Button>
+                                <Button 
                                     href='/request'
-                                    className='inline-flex items-center rounded-full bg-[#0B3558] px-6 py-3 text-white hover:bg-[#0B3558]/90 transition-colors font-bold'
+                                    variant="secondary"
+                                    size="large"
                                 >
                                     Contact Me
-                                </Link>
+                                </Button>
                             </div>
                         </div>
                     </div>

@@ -8,7 +8,8 @@ import Image from 'next/image';
 // Construct the absolute URL for the OG image
 const title = 'Endorse Derrick Threatt for GCP HOA | Show Your Support';
 const subtitle = 'Your support helps strengthen our community. Share your endorsement in just a few simple steps.';
-const ogImageUrl = `/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
+const baseUrl = process.env.NEXTAUTH_URL || 'https://gcphoatx.com';
+const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
 
 export const metadata: Metadata = {
     title: title,

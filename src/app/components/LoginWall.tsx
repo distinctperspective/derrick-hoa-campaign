@@ -4,6 +4,7 @@ import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from './Logo';
+import GoogleSignInButton from './GoogleSignInButton';
 
 export default function LoginWall() {
     return (
@@ -21,19 +22,10 @@ export default function LoginWall() {
                     To submit a request, you'll need to sign in first. This helps us ensure we're addressing concerns from actual Grand Central Park residents.
                 </p>
                 <div className="space-y-4">
-                    <button
-                        onClick={() => signIn('google')}
-                        className="inline-flex items-center justify-center gap-3 bg-[#40C5B5] text-white px-8 py-3 rounded-full font-bold hover:bg-[#40C5B5]/90 transition-colors"
-                    >
-                        <Image
-                            src="/google.svg"
-                            alt="Google"
-                            width={20}
-                            height={20}
-                            className="w-5 h-5"
-                        />
-                        Sign in with Google
-                    </button>
+                    <GoogleSignInButton
+                        size="large"
+                        className="bg-[#40C5B5] text-white hover:bg-[#40C5B5]/90"
+                    />
                     <div className="space-y-2 text-sm text-gray-500">
                         <p>
                             Your information helps us better understand and address community needs.

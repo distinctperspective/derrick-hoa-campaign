@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { CheckCircle, XCircle, AlertCircle, User } from 'lucide-react';
+import { CheckCircle, XCircle, AlertCircle, User, Trash2, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 
 type User = {
@@ -30,6 +30,7 @@ export default function ApproveEndorsementsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   // Fetch all endorsements
   useEffect(() => {
@@ -84,6 +85,41 @@ export default function ApproveEndorsementsPage() {
       console.error('Error approving endorsement:', err);
       setError('Failed to approve endorsement');
       setTimeout(() => setError(null), 3000);
+    }
+  };
+
+  const handleDelete = async (endorsementId: string) => {
+    if (!confirm('Are you sure you want to delete this endorsement? This action cannot be undone.')) {
+      return;
+    }
+    
+    try {
+      setDeleting(endorsementId);
+      const response = await fetch('/api/admin/delete-endorsement', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ endorsementId }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete endorsement');
+      }
+
+      // Remove the deleted endorsement from state
+      setEndorsements(prevEndorsements => 
+        prevEndorsements.filter(endorsement => endorsement.id !== endorsementId)
+      );
+
+      setSuccessMessage('Endorsement deleted successfully!');
+      setTimeout(() => setSuccessMessage(null), 3000);
+    } catch (err) {
+      console.error('Error deleting endorsement:', err);
+      setError('Failed to delete endorsement');
+      setTimeout(() => setError(null), 3000);
+    } finally {
+      setDeleting(null);
     }
   };
 
@@ -189,6 +225,23 @@ export default function ApproveEndorsementsPage() {
                         >
                           Approve
                         </button>
+                        <button
+                          onClick={() => handleDelete(endorsement.id)}
+                          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-500/90 transition-colors ml-2"
+                          disabled={deleting === endorsement.id}
+                        >
+                          {deleting === endorsement.id ? (
+                            <span className="flex items-center">
+                              <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                              Deleting...
+                            </span>
+                          ) : (
+                            <span className="flex items-center">
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              Delete
+                            </span>
+                          )}
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -251,6 +304,25 @@ export default function ApproveEndorsementsPage() {
                       <div className="mt-2 p-3 bg-gray-50 rounded-lg">
                         <p className="text-gray-700">{endorsement.message}</p>
                         <p className="text-sm text-gray-500 mt-2">Display as: {endorsement.displayName}</p>
+                      </div>
+                      <div className="flex justify-end">
+                        <button
+                          onClick={() => handleDelete(endorsement.id)}
+                          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-500/90 transition-colors"
+                          disabled={deleting === endorsement.id}
+                        >
+                          {deleting === endorsement.id ? (
+                            <span className="flex items-center">
+                              <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                              Deleting...
+                            </span>
+                          ) : (
+                            <span className="flex items-center">
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              Delete
+                            </span>
+                          )}
+                        </button>
                       </div>
                     </div>
                   ))}

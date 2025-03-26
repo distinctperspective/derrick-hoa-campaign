@@ -2,13 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import { useSession, signIn } from 'next-auth/react';
-import { Button } from '@/registry/new-york-v4/ui/button';
+import { Button as ShadcnButton } from '@/registry/new-york-v4/ui/button';
 import { Input } from '@/registry/new-york-v4/ui/input';
 import { Textarea } from '@/registry/new-york-v4/ui/textarea';
 import { Label } from '@/registry/new-york-v4/ui/label';
 import { toast } from 'sonner';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
+import UserEndorsements from './UserEndorsements';
+import GoogleSignInButton from '../components/GoogleSignInButton';
+import Button from '../components/Button';
 
 // Import MapboxSearch component dynamically with SSR disabled
 const MapboxSearch = dynamic(
@@ -149,12 +153,11 @@ export default function EndorsementForm() {
                     <p className="text-gray-600 mb-6">
                         Please sign in with your Google account to share your endorsement.
                     </p>
-                    <Button 
-                        onClick={() => signIn('google', { callbackUrl: window.location.href })}
+                    <GoogleSignInButton 
                         className="bg-[#40BFB4] hover:bg-[#369c93] text-white"
-                    >
-                        Sign in with Google
-                    </Button>
+                        callbackUrl={window.location.href}
+                        size="large"
+                    />
                 </div>
             ) : isSuccess ? (
                 <div className="text-center py-6">
@@ -170,6 +173,8 @@ export default function EndorsementForm() {
                     >
                         Submit Another Endorsement
                     </Button>
+                    {/* Show user's existing endorsements */}
+                    <UserEndorsements />
                 </div>
             ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -262,18 +267,18 @@ export default function EndorsementForm() {
                         </p>
                     </div>
                     
-                    <Button 
-                        type="submit"
-                        className="w-full bg-[#40BFB4] hover:bg-[#369c93] text-white"
-                        disabled={isSubmitting}
-                    >
-                        {isSubmitting ? (
-                            <>
-                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                Submitting...
-                            </>
-                        ) : 'Submit Endorsement'}
-                    </Button>
+                    <div className="mt-6">
+                        <Button
+                            type="submit"
+                            variant="primary"
+                            size="large"
+                            isLoading={isSubmitting}
+                            disabled={isSubmitting}
+                            className="w-full"
+                        >
+                            {isSubmitting ? 'Submitting...' : 'Submit Endorsement'}
+                        </Button>
+                    </div>
                 </form>
             )}
         </div>

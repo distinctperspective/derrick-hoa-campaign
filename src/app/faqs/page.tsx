@@ -4,36 +4,18 @@ import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
 import FAQAccordion from './FAQAccordion';
 import Link from 'next/link';
+import { generateOgMetadata } from '../utils/generateOgMetadata';
 
-// Construct the absolute URL for the OG image
 const title = 'Frequently Asked Questions | Derrick Threatt for GCP HOA';
+const description = 'Find answers to common questions about Derrick Threatt\'s campaign for the Grand Central Park HOA board and his vision for our community.';
 const subtitle = 'Find answers to common questions about my campaign and vision for our community';
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://derrickforgcphoa.com';
-const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
 
-export const metadata: Metadata = {
-    title: title,
-    description: 'Find answers to common questions about Derrick Threatt\'s campaign for the Grand Central Park HOA board and his vision for our community.',
-    keywords: ['Derrick Threatt', 'Grand Central Park', 'GCP', 'HOA', 'FAQ', 'Questions', 'Answers', 'Community'],
-    openGraph: {
-        title: title,
-        description: 'Find answers to common questions about Derrick Threatt\'s campaign for the Grand Central Park HOA board and his vision for our community.',
-        images: [
-            {
-                url: ogImageUrl,
-                width: 1200,
-                height: 630,
-                alt: 'Frequently Asked Questions | Derrick Threatt for GCP HOA'
-            }
-        ],
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: title,
-        description: 'Find answers to common questions about Derrick Threatt\'s campaign for the Grand Central Park HOA board and his vision for our community.',
-        images: [ogImageUrl],
-    }
-};
+export const metadata: Metadata = generateOgMetadata({
+    title,
+    description,
+    subtitle,
+    keywords: ['FAQ', 'Questions', 'Answers', 'Community'],
+});
 
 export default function FAQsPage() {
     return (

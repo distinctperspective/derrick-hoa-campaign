@@ -106,3 +106,48 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Failed to submit endorsement' }, { status: 500 });
     }
 }
+
+export async function DELETE(req: NextRequest) {
+    try {
+        // Check authentication
+        const session = await getServerSession(authOptions);
+        
+        if (!session?.user) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+        
+        // Get endorsement ID from request
+        const { endorsementId } = await req.json();
+        
+        if (!endorsementId) {
+            return NextResponse.json({ error: 'Endorsement ID is required' }, { status: 400 });
+        }
+        
+        // Check if the endorsement belongs to the user
+        const endorsement = await prisma.endorsement.findUnique({
+            where: { id: endorsementId },
+            select: { userId: true }
+        });
+        
+        if (!endorsement) {
+            return NextResponse.json({ error: 'Endorsement not found' }, { status: 404 });
+        }
+        
+        // Only allow users to delete their own endorsements
+        if (endorsement.userId !== session.user.id) {
+            return NextResponse.json({ error: 'You can only delete your own endorsements' }, { status: 403 });
+        }
+        
+        // Delete the endorsement
+        await prisma.endorsement.delete({
+            where: { id: endorsementId }
+        });
+        
+        return NextResponse.json({ success: true }, { status: 200 });
+    } catch (error) {
+        console.error('Error deleting endorsement:', error);
+        return NextResponse.json({ 
+            error: error instanceof Error ? error.message : 'An unknown error occurred' 
+        }, { status: 500 });
+    }
+}

@@ -15,30 +15,18 @@ import {
     ClipboardList 
 } from 'lucide-react';
 import { Metadata } from 'next';
+import { generateOgMetadata } from '../utils/generateOgMetadata';
 
-export const metadata: Metadata = {
-    title: 'Financial Analysis | Derrick Threatt for GCP RAI',
-    description: 'Review Derrick Threatt\'s analysis of Grand Central Park RAI\'s financial health, budget breakdown, and financial management strategies.',
-    keywords: ['Derrick Threatt', 'Grand Central Park', 'GCP', 'RAI', 'Financials', 'Budget', 'HOA Dues', 'Financial Management'],
-    openGraph: {
-        title: 'Financial Analysis | Derrick Threatt for GCP RAI',
-        description: 'Review Derrick Threatt\'s analysis of Grand Central Park RAI\'s financial health, budget breakdown, and financial management strategies.',
-        images: [
-            {
-                url: '/images/accounting.jpg',
-                width: 1200,
-                height: 630,
-                alt: 'Financial Background'
-            }
-        ],
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Financial Analysis | Derrick Threatt for GCP RAI',
-        description: 'Review Derrick Threatt\'s analysis of Grand Central Park RAI\'s financial health, budget breakdown, and financial management strategies.',
-        images: ['/images/accounting.jpg'],
-    }
-};
+const title = 'Financial Analysis | Derrick Threatt for GCP RAI';
+const description = 'Review Derrick Threatt\'s analysis of Grand Central Park RAI\'s financial health, budget breakdown, and financial management strategies.';
+const subtitle = 'Review our financial health, budget breakdown, and management strategies';
+
+export const metadata: Metadata = generateOgMetadata({
+    title,
+    description,
+    subtitle,
+    keywords: ['Financials', 'Budget', 'HOA Dues', 'Financial Management'],
+});
 
 export const dynamic = 'force-static';
 
