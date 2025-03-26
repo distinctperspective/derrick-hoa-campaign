@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Calendar, Clock, ChevronDown, ChevronUp, MapPin } from 'lucide-react';
+import { Calendar, Clock, ChevronDown, MapPin } from 'lucide-react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -41,8 +41,10 @@ export default function UpcomingEvents() {
           event.start && new Date(event.start) >= now
         ).slice(0, 5); // Limit to 5 events
         
-        // Log events to debug image URLs
-        console.log('Upcoming events:', upcomingEvents);
+        console.log('Upcoming events with images:', upcomingEvents.map((e: Event) => ({
+          title: e.title,
+          imageUrl: e.image
+        })));
         
         setEvents(upcomingEvents);
         setLoading(false);
@@ -63,16 +65,6 @@ export default function UpcomingEvents() {
     return date.toLocaleDateString('en-US', { 
       weekday: 'short', 
       month: 'short', 
-      day: 'numeric' 
-    });
-  };
-
-  const formatDay = (dateString: string | null) => {
-    if (!dateString) return '';
-    
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      weekday: 'short', 
       day: 'numeric' 
     });
   };
@@ -150,7 +142,7 @@ export default function UpcomingEvents() {
     <div className="bg-white rounded-xl shadow-sm p-6">
       <h3 className="text-xl font-bold text-[#0B3558] mb-4">Upcoming Events</h3>
       <div className="space-y-3">
-        {events.map((event) => (
+        {events.map((event: Event) => (
           <motion.div 
             key={event.id} 
             className={`border border-gray-100 rounded-lg overflow-hidden transition-all duration-300 ${
@@ -195,13 +187,13 @@ export default function UpcomingEvents() {
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
                 >
-                  {(event.image || fallbackImage) && (
+                  {event.image && (
                     <div className="mb-3 relative h-32 w-full rounded-lg overflow-hidden">
                       <Image 
-                        src={event.image || fallbackImage}
+                        src={event.image}
                         alt={event.title} 
                         fill 
-                        style={{ objectFit: 'cover' }} 
+                        style={{ objectFit: 'cover' }}
                         unoptimized
                       />
                     </div>

@@ -18,6 +18,8 @@ export async function GET() {
     const events = Object.values(calendarData)
       .filter((event: any) => event.type === 'VEVENT')
       .map((event: any) => {
+        console.log('Raw event data:', JSON.stringify(event, null, 2));
+        
         const startDate = event.start ? new Date(event.start) : null;
         const endDate = event.end ? new Date(event.end) : null;
         
@@ -25,6 +27,8 @@ export async function GET() {
         let imageUrl = null;
         if (event['x-wp-images-url']) {
           imageUrl = event['x-wp-images-url'];
+        } else {
+          imageUrl = extractImageUrl(event.description || '');
         }
         
         return {
@@ -52,4 +56,21 @@ export async function GET() {
       { status: 500 }
     );
   }
+}
+
+// Function to extract image URLs from event descriptions
+function extractImageUrl(description: string): string | null {
+  // Look for image URLs in the description
+  const imgRegex = /https:\/\/timelyapp-prod\.s3\.us-west-2\.amazonaws\.com\/images\/[^"'\s)]+/g;
+  const matches = description.match(imgRegex);
+  
+  if (matches && matches.length > 0) {
+    // Remove any trailing quotes or apostrophes
+    let imageUrl = matches[0];
+    imageUrl = imageUrl.replace(/['"]$/, '');
+    console.log('Found image URL:', imageUrl);
+    return imageUrl;
+  }
+  
+  return null;
 }
