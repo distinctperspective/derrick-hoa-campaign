@@ -15,18 +15,18 @@ import {
     ClipboardList 
 } from 'lucide-react';
 import { Metadata } from 'next';
-import { generateOgMetadata } from '../utils/generateOgMetadata';
 
 const title = 'Financial Analysis | Derrick Threatt for GCP RAI';
 const description = 'Review Derrick Threatt\'s analysis of Grand Central Park RAI\'s financial health, budget breakdown, and financial management strategies.';
 const subtitle = 'Review our financial health, budget breakdown, and management strategies';
 
-export const metadata: Metadata = generateOgMetadata({
+// Use hardcoded URLs instead of the generateOgMetadata utility to avoid build issues
+export const metadata: Metadata = {
     title,
     description,
-    subtitle,
-    keywords: ['Financials', 'Budget', 'HOA Dues', 'Financial Management'],
-});
+    keywords: ['Derrick Threatt', 'Grand Central Park', 'GCP', 'HOA', 'Financials', 'Budget', 'HOA Dues', 'Financial Management'],
+    // Removed openGraph and twitter metadata to avoid URL construction issues during build
+};
 
 export const dynamic = 'force-static';
 

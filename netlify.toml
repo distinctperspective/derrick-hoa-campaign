@@ -1,20 +1,9 @@
 [build]
-  command = "npm run build"
+  command = "npm install && npx prisma generate && npm run build"
   publish = ".next"
 
 [build.environment]
-  DATABASE_URL = ""
-  DIRECT_URL = ""
-  GOOGLE_CLIENT_ID = ""
-  GOOGLE_CLIENT_SECRET = ""
-  NEXTAUTH_SECRET = ""
-  NEXTAUTH_URL = ""
-  NEXT_PUBLIC_GA_MEASUREMENT_ID = ""
-  NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN = ""
-  NEXT_PUBLIC_SUPABASE_ANON_KEY = ""
-  NEXT_PUBLIC_SUPABASE_URL = ""
-  SUPABASE_SERVICE_ROLE_KEY = ""
-  RESEND_API_KEY = ""
+  NODE_VERSION = "18"
 
 [dev]
   command = "next dev --turbopack"

@@ -5,10 +5,10 @@ import PageHero from '../components/PageHero';
 import EndorsementForm from './EndorsementForm';
 import Image from 'next/image';
 
-// Construct the absolute URL for the OG image
+// Construct the absolute URL for the OG image using a safer approach
 const title = 'Endorse Derrick Threatt for GCP HOA | Show Your Support';
 const subtitle = 'Your support helps strengthen our community. Share your endorsement in just a few simple steps.';
-const baseUrl = process.env.NEXTAUTH_URL || 'https://gcphoatx.com';
+const baseUrl = 'https://gcphoatx.com'; // Use hardcoded URL to avoid build issues
 const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
 
 export const metadata: Metadata = {

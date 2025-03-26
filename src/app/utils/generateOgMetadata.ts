@@ -13,11 +13,8 @@ export function generateOgMetadata({
   subtitle = 'Building a stronger community together',
   keywords = [],
 }: GenerateOgMetadataProps): Metadata {
-  // Construct the absolute URL for the OG image
-  const baseUrl = process.env.NEXTAUTH_URL || 'https://gcphoatx.com';
-  
-  // Ensure baseUrl is a valid URL by using the URL constructor
-  const ogImageUrl = new URL('/api/og', baseUrl).toString() + `?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
+  // Use a hardcoded URL to avoid any build issues with URL construction
+  const ogImageUrl = `https://gcphoatx.com/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
 
   return {
     title,

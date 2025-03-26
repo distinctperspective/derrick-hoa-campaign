@@ -6,18 +6,39 @@ import Link from 'next/link';
 import { Briefcase, GraduationCap, Home, Heart, Users, Star, Globe, Code, ChartBar, Building2, DollarSign, MessageSquare, Lightbulb } from 'lucide-react';
 import { Metadata } from 'next';
 import Button from '../components/Button';
-import { generateOgMetadata } from '../utils/generateOgMetadata';
 
 const title = 'About Derrick Threatt | Candidate for GCP RAI Board';
 const description = 'Learn about Derrick Threatt - a technology leader, community advocate, and candidate for the Grand Central Park Residential Association Inc. Board.';
 const subtitle = 'A Technology Leader & Community Advocate';
 
-export const metadata: Metadata = generateOgMetadata({
+// Use hardcoded URLs instead of the generateOgMetadata utility to avoid build issues
+export const metadata: Metadata = {
     title,
     description,
-    subtitle,
     keywords: ['Derrick Threatt', 'Grand Central Park', 'GCP', 'RAI', 'Board Member', 'About', 'Biography', 'Leadership', 'Military Service'],
-});
+    openGraph: {
+        title,
+        description,
+        images: [
+            {
+                url: 'https://gcphoatx.com/api/og?title=About%20Derrick%20Threatt&subtitle=A%20Technology%20Leader%20%26%20Community%20Advocate',
+                width: 1200,
+                height: 630,
+                alt: title
+            }
+        ],
+        siteName: 'Derrick Threatt for GCP RAI',
+        locale: 'en_US',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: ['https://gcphoatx.com/api/og?title=About%20Derrick%20Threatt&subtitle=A%20Technology%20Leader%20%26%20Community%20Advocate'],
+        creator: '@derrickthreatt',
+    }
+};
 
 export default function AboutPage() {
     return (
