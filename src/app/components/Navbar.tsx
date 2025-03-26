@@ -252,45 +252,65 @@ const Navbar = () => {
                                         </Link>
                                     )}
                                     {!session && (
-                                        <Button
-                                            onClick={() => {
-                                                signIn('google');
-                                                setIsMenuOpen(false);
-                                            }}
-                                            variant="primary"
-                                            size="default"
-                                            uppercase
-                                        >
-                                            Login
-                                        </Button>
+                                        <div className="mt-3 pt-3 border-t border-white/20">
+                                            <div className="flex flex-row gap-2">
+                                                <Button 
+                                                    href="https://grandcentralpark.ivotehoa.com/login"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    variant="accent"
+                                                    size="default"
+                                                    uppercase
+                                                    className='flex-1'
+                                                    onClick={() => setIsMenuOpen(false)}
+                                                >
+                                                    Vote Now
+                                                </Button>
+                                                <Button
+                                                    onClick={() => {
+                                                        signIn('google');
+                                                        setIsMenuOpen(false);
+                                                    }}
+                                                    variant="primary"
+                                                    size="default"
+                                                    uppercase
+                                                    className="flex-1"
+                                                >
+                                                    Login
+                                                </Button>
+                                            </div>
+                                        </div>
                                     )}
-                                    <div className="mt-3 pt-3 border-t border-white/20">
-                                        <Button 
-                                            href="https://grandcentralpark.ivotehoa.com/login"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            variant="accent"
-                                            size="default"
-                                            uppercase
-                                            className='w-full'
-                                            onClick={() => setIsMenuOpen(false)}
-                                        >
-                                            Vote Now
-                                        </Button>
-                                        {session && (
-                                            <Button
-                                                onClick={() => {
-                                                    signOut();
-                                                    setIsMenuOpen(false);
-                                                }}
-                                                variant="primary"
-                                                size="default"
-                                                uppercase
-                                            >
-                                                Logout
-                                            </Button>
-                                        )}
-                                    </div>
+                                    {session && (
+                                        <div className="mt-3 pt-3 border-t border-white/20">
+                                            <div className="flex flex-row gap-2">
+                                                <Button 
+                                                    href="https://grandcentralpark.ivotehoa.com/login"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    variant="accent"
+                                                    size="default"
+                                                    uppercase
+                                                    className='flex-1'
+                                                    onClick={() => setIsMenuOpen(false)}
+                                                >
+                                                    Vote Now
+                                                </Button>
+                                                <Button
+                                                    onClick={() => {
+                                                        signOut();
+                                                        setIsMenuOpen(false);
+                                                    }}
+                                                    variant="primary"
+                                                    size="default"
+                                                    uppercase
+                                                    className='flex-1'
+                                                >
+                                                    Logout
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </motion.div>
                         )}

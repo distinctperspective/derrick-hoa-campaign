@@ -114,7 +114,7 @@ export default function AdminSettings() {
           <input
             type="text"
             placeholder="Search users by name or email..."
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-gray-300 rounded-md text-gray-800"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -144,8 +144,8 @@ export default function AdminSettings() {
               <tbody className="divide-y divide-gray-200">
                 {filteredUsers.map(user => (
                   <tr key={user.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3">{user.name || 'N/A'}</td>
-                    <td className="px-4 py-3">{user.email || 'N/A'}</td>
+                    <td className="px-4 py-3 text-gray-800">{user.name || 'N/A'}</td>
+                    <td className="px-4 py-3 text-gray-800">{user.email || 'N/A'}</td>
                     <td className="px-4 py-3">
                       {user.isAdmin ? (
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">

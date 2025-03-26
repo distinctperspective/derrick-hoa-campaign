@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface FAQItem {
     question: string;
@@ -119,33 +120,59 @@ export default function FAQAccordion() {
     };
 
     return (
-        <div className="space-y-4">
+        <motion.div 
+            className="space-y-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+        >
             {faqs.map((faq, index) => (
-                <div 
+                <motion.div 
                     key={index} 
                     className="bg-white rounded-xl shadow-sm overflow-hidden"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    whileHover={{ scale: 1.01 }}
                 >
-                    <button
+                    <motion.button
                         className="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none"
                         onClick={() => toggleFAQ(index)}
+                        whileTap={{ scale: 0.98 }}
                     >
                         <h3 className="text-lg font-semibold text-[#0B3558]">{faq.question}</h3>
-                        {openIndex === index ? (
-                            <ChevronUp className="h-5 w-5 text-[#40BFB4] flex-shrink-0" />
-                        ) : (
+                        <motion.div
+                            animate={{ rotate: openIndex === index ? 180 : 0 }}
+                            transition={{ duration: 0.3 }}
+                        >
                             <ChevronDown className="h-5 w-5 text-[#40BFB4] flex-shrink-0" />
-                        )}
-                    </button>
+                        </motion.div>
+                    </motion.button>
                     
-                    {openIndex === index && (
-                        <div className="px-6 pb-4">
-                            <div className="text-gray-600 prose">
-                                {faq.answer}
-                            </div>
-                        </div>
-                    )}
-                </div>
+                    <AnimatePresence>
+                        {openIndex === index && (
+                            <motion.div 
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                className="overflow-hidden"
+                            >
+                                <div className="px-6 pb-4">
+                                    <motion.div 
+                                        className="text-gray-600 prose"
+                                        initial={{ y: -10, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{ duration: 0.3, delay: 0.1 }}
+                                    >
+                                        {faq.answer}
+                                    </motion.div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
             ))}
-        </div>
+        </motion.div>
     );
 }

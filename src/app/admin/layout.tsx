@@ -14,8 +14,10 @@ import {
   ChevronDown,
   Menu,
   Shield,
-  HelpCircle
+  HelpCircle,
+  X
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function AdminLayout({
   children,
@@ -145,39 +147,59 @@ export default function AdminLayout({
         </header>
 
         {/* Mobile sidebar */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 z-40 bg-black bg-opacity-50">
-            <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-lg">
-              <div className="p-4 flex justify-between items-center">
-                <h2 className="text-lg font-bold text-[#0B3558]">Derrick Threatt</h2>
-                <button 
-                  className="p-2 rounded-md text-gray-500 hover:text-gray-700"
-                  onClick={toggleMobileMenu}
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              <nav className="p-4">
-                <ul className="space-y-2">
-                  {navItems.map((item) => (
-                    <li key={item.name}>
-                      <Link 
-                        href={item.href} 
-                        className="flex items-center p-2 rounded-md hover:bg-gray-100 text-gray-700 hover:text-[#0B3558]"
-                        onClick={() => setIsMobileMenuOpen(false)}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <>
+              <motion.div 
+                className="md:hidden fixed inset-0 z-40 backdrop-blur-sm bg-black/30"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                onClick={toggleMobileMenu}
+              />
+              <motion.div 
+                className="md:hidden fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-50"
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                <div className="p-4 flex justify-between items-center">
+                  <h2 className="text-lg font-bold text-[#0B3558]">Derrick Threatt</h2>
+                  <motion.button 
+                    className="p-2 rounded-md text-gray-500 hover:text-gray-700"
+                    onClick={toggleMobileMenu}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <X className="w-6 h-6" />
+                  </motion.button>
+                </div>
+                <nav className="p-4">
+                  <ul className="space-y-2">
+                    {navItems.map((item, index) => (
+                      <motion.li 
+                        key={item.name}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
                       >
-                        <item.icon className="w-5 h-5 mr-3" />
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </div>
-          </div>
-        )}
+                        <Link 
+                          href={item.href} 
+                          className="flex items-center p-2 rounded-md hover:bg-gray-100 text-gray-700 hover:text-[#0B3558]"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <item.icon className="w-5 h-5 mr-3" />
+                          {item.name}
+                        </Link>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </nav>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
 
         {/* Page content */}
         <main className="flex-1 overflow-y-auto bg-gray-100 p-4">
