@@ -1,9 +1,17 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend only if API key is available
+const resendApiKey = process.env.RESEND_API_KEY;
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 export async function sendWelcomeEmail(email: string, name: string, isProfileComplete: boolean = false) {
   try {
+    // If Resend is not initialized, log a warning and return success to prevent build failures
+    if (!resend) {
+      console.warn('Resend API key not found. Email sending is disabled.');
+      return { success: true, data: null };
+    }
+
     const { data, error } = await resend.emails.send({
       from: 'Derrick Threatt <derrickthreatt@gcphoatx.com>',
       to: [email],
