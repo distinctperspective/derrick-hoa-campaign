@@ -16,7 +16,7 @@ export function generateOgMetadata({
   // Construct the absolute URL for the OG image
   const baseUrl = process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : 'https://www.gcphoatx.com';
+    : 'https://gcphoatx.com';
     
   const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(subtitle)}`;
 
