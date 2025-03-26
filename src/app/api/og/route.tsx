@@ -11,18 +11,21 @@ export async function GET(request: NextRequest) {
     const title = searchParams.get('title') || 'Derrick Threatt for GCP HOA';
     const subtitle = searchParams.get('subtitle') || 'Building a stronger community together';
     
+    // Base URL for assets
+    const baseUrl = process.env.NEXTAUTH_URL || 'https://gcphoatx.com';
+    
     // Use the same background image as the hero sections
-    const imageData = await fetch(new URL('/images/lakehouse.jpeg', request.url)).then(
+    const imageData = await fetch(new URL('/images/lakehouse.jpeg', baseUrl)).then(
       (res) => res.arrayBuffer(),
     );
     
     // Use the logo
-    const logoData = await fetch(new URL('/images/dtlogo.png', request.url)).then(
+    const logoData = await fetch(new URL('/images/dtlogo.png', baseUrl)).then(
       (res) => res.arrayBuffer(),
     );
     
     // Use the cutout image
-    const cutoutData = await fetch(new URL('/images/derrick-cutout.png', request.url)).then(
+    const cutoutData = await fetch(new URL('/images/derrick-cutout.png', baseUrl)).then(
       (res) => res.arrayBuffer(),
     );
 

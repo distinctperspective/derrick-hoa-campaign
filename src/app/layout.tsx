@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     creator: 'Derrick Threatt',
     publisher: 'Derrick Threatt Campaign',
     robots: 'index, follow',
-    metadataBase: new URL('https://gcphoatx.com'),
+    metadataBase: new URL(process.env.NEXTAUTH_URL || 'https://gcphoatx.com'),
     alternates: {
         canonical: '/'
     },
