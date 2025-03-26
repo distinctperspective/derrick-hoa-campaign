@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
 import FAQAccordion from './FAQAccordion';
+import ResourcesSidebar from './ResourcesSidebar';
+import UpcomingEvents from '../components/UpcomingEvents';
 import Link from 'next/link';
 import { generateOgMetadata } from '../utils/generateOgMetadata';
 
@@ -32,7 +34,7 @@ export default function FAQsPage() {
 
             {/* Main Content */}
             <div className='bg-gray-50'>
-                <div className='mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16'>
+                <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16'>
                     <div className='mb-12 text-center'>
                         <h2 className='text-2xl sm:text-3xl font-bold text-[#0B3558] mb-4'>Common Questions</h2>
                         <p className='text-lg text-gray-600 max-w-2xl mx-auto'>
@@ -40,28 +42,43 @@ export default function FAQsPage() {
                         </p>
                     </div>
                     
-                    <FAQAccordion />
+                    <div className="flex flex-col lg:flex-row gap-8">
+                        {/* Main FAQ Content */}
+                        <div className="lg:w-2/3">
+                            <FAQAccordion />
 
-                    {/* Endorsement Card */}
-                    <div className="mt-16 bg-white rounded-xl shadow-md overflow-hidden">
-                        <div className="p-8 md:flex md:items-center">
-                            <div className="md:flex-1">
-                                <h3 className="text-2xl font-bold text-[#0B3558] mb-3">Already Know Me?</h3>
-                                <p className="text-gray-600 mb-6">
-                                    If you're already familiar with me and my vision for Grand Central Park, I'd be honored to have your endorsement. Your support helps our community see the widespread backing for positive change.
-                                </p>
-                                <Link 
-                                    href="/endorse-derrick-for-gcphoa" 
-                                    className="inline-block bg-[#E85C41] hover:bg-[#E85C41]/90 text-white font-bold py-3 px-6 rounded-full transition-colors"
-                                >
-                                    Endorse My Campaign
-                                </Link>
+                            {/* Endorsement Card */}
+                            <div className="mt-16 bg-white rounded-xl shadow-md overflow-hidden">
+                                <div className="p-8 md:flex md:items-center">
+                                    <div className="md:flex-1">
+                                        <h3 className="text-2xl font-bold text-[#0B3558] mb-3">Already Know Me?</h3>
+                                        <p className="text-gray-600 mb-6">
+                                            If you're already familiar with me and my vision for Grand Central Park, I'd be honored to have your endorsement. Your support helps our community see the widespread backing for positive change.
+                                        </p>
+                                        <Link 
+                                            href="/endorse-derrick-for-gcphoa" 
+                                            className="inline-block bg-[#E85C41] hover:bg-[#E85C41]/90 text-white font-bold py-3 px-6 rounded-full transition-colors"
+                                        >
+                                            Endorse My Campaign
+                                        </Link>
+                                    </div>
+                                    <div className="hidden md:block md:flex-shrink-0 md:ml-8">
+                                        <div className="w-32 h-32 rounded-full bg-[#40BFB4]/10 flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-[#40BFB4]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="hidden md:block md:flex-shrink-0 md:ml-8">
-                                <div className="w-32 h-32 rounded-full bg-[#40BFB4]/10 flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-[#40BFB4]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
-                                    </svg>
+                        </div>
+                        
+                        {/* Sidebar */}
+                        <div className="lg:w-1/3 mt-8 lg:mt-0">
+                            <div className="sticky top-24">
+                                <ResourcesSidebar />
+                                <div className="mt-6">
+                                    <UpcomingEvents />
                                 </div>
                             </div>
                         </div>

@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[dev]
+  command = "next dev --turbopack"
+  framework = "next"
+  targetPort = 3000
+  port = 8888
+  autoLaunch = false

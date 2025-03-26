@@ -3,6 +3,8 @@ import GoogleProvider from 'next-auth/providers/google';
 import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
+import { sendWelcomeEmail } from '@/app/utils/sendEmail';
+
 const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
@@ -30,6 +32,45 @@ export const authOptions: NextAuthOptions = {
             },
         },
     },
+    events: {
+        createUser: async ({ user }) => {
+            try {
+                // Get full user data from database to access all fields
+                const userData = await prisma.user.findUnique({
+                    where: { id: user.id }
+                });
+                
+                if (!userData || !userData.email) {
+                    console.error("User data not found or missing email");
+                    return;
+                }
+                
+                // Check if user has address and phone number
+                const isProfileComplete = Boolean(userData.address && userData.phoneNumber);
+                
+                // Send welcome email
+                const emailResult = await sendWelcomeEmail(
+                    userData.email, 
+                    userData.name || "Neighbor", 
+                    isProfileComplete
+                );
+                
+                if (emailResult.success) {
+                    // Update user record to indicate welcome email was sent
+                    await prisma.user.update({
+                        where: { id: user.id },
+                        data: { welcomeEmailSent: new Date() }
+                    });
+                    
+                    console.log(`Welcome email sent successfully to ${userData.email}`);
+                } else {
+                    console.error(`Failed to send welcome email to ${userData.email}:`, emailResult.error);
+                }
+            } catch (error) {
+                console.error("Error in createUser event:", error);
+            }
+        },
+    },
     callbacks: {
         async session({ session, token }: { session: Session; token: any }) {
             if (session?.user && token?.sub) {
@@ -46,6 +87,7 @@ export const authOptions: NextAuthOptions = {
                             phoneNumber: true,
                             isResident: true,
                             isAdmin: true,
+                            welcomeEmailSent: true,
                         },
                     });
                     
