@@ -22,7 +22,7 @@ import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const router = useRouter();
 
     return (
@@ -61,7 +61,7 @@ const Navbar = () => {
                         >
                             Vote Now
                         </Button>
-                        {session ? (
+                        {status === 'authenticated' && session ? (
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <button className="relative flex items-center">
@@ -122,7 +122,7 @@ const Navbar = () => {
 
                     {/* Mobile Navigation */}
                     <div className='md:hidden flex items-center gap-4'>
-                        {session ? (
+                        {status === 'authenticated' && session ? (
                             <button 
                                 className="relative flex items-center"
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -185,7 +185,7 @@ const Navbar = () => {
                                 className="fixed top-[64px] left-[16px] right-[16px] bg-[#0B3558] shadow-lg py-4 px-6 rounded-b-2xl z-40"
                             >
                                 <div className="container mx-auto max-w-[1600px]">
-                                    {session && (
+                                    {status === 'authenticated' && session && (
                                         <div className="py-2 mb-3 border-b border-white/20">
                                             <div className="font-medium text-white">{session.user?.name}</div>
                                             <div className="text-sm text-white/80">{session.user?.email}</div>
@@ -233,7 +233,7 @@ const Navbar = () => {
                                     >
                                         Contact Me
                                     </Link>
-                                    {session && (
+                                    {status === 'authenticated' && session && (
                                         <Link 
                                             href="/profile" 
                                             className='block text-white font-extrabold uppercase tracking-wide hover:text-gray-200 transition-colors py-2'
@@ -242,7 +242,7 @@ const Navbar = () => {
                                             Profile
                                         </Link>
                                     )}
-                                    {session?.user?.isAdmin && (
+                                    {status === 'authenticated' && session?.user?.isAdmin && (
                                         <Link 
                                             href="/admin" 
                                             className='block text-white font-extrabold uppercase tracking-wide hover:text-gray-200 transition-colors py-2'
@@ -251,7 +251,7 @@ const Navbar = () => {
                                             Admin
                                         </Link>
                                     )}
-                                    {!session && (
+                                    {status !== 'authenticated' && (
                                         <div className="mt-3 pt-3 border-t border-white/20">
                                             <div className="flex flex-row gap-2">
                                                 <Button 
@@ -281,7 +281,7 @@ const Navbar = () => {
                                             </div>
                                         </div>
                                     )}
-                                    {session && (
+                                    {status === 'authenticated' && session && (
                                         <div className="mt-3 pt-3 border-t border-white/20">
                                             <div className="flex flex-row gap-2">
                                                 <Button 
