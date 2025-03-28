@@ -1,44 +1,47 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
-import Image from 'next/image';
 import { ButtonHTMLAttributes } from 'react';
+
+import Image from 'next/image';
+
 import Button from './Button';
+import { signIn, signOut } from 'next-auth/react';
 
 interface GoogleSignInButtonProps {
-  callbackUrl?: string;
-  variant?: 'primary' | 'secondary' | 'accent';
-  size?: 'default' | 'large';
-  className?: string;
+    callbackUrl?: string;
+    variant?: 'primary' | 'secondary' | 'accent';
+    size?: 'default' | 'large';
+    className?: string;
+    action?: 'signin' | 'signout';
 }
 
 export default function GoogleSignInButton({
-  callbackUrl,
-  variant = 'primary',
-  size = 'default',
-  className = '',
+    callbackUrl,
+    variant = 'primary',
+    size = 'default',
+    className = '',
+    action = 'signin'
 }: GoogleSignInButtonProps) {
-  const handleSignIn = () => {
-    const options = callbackUrl ? { callbackUrl } : undefined;
-    signIn('google', options);
-  };
+    const handleAction = async () => {
+        if (action === 'signout') {
+            // Clear all auth cookies and redirect to home
+            await signOut({
+                callbackUrl: '/',
+                redirect: true
+            });
+            return;
+        }
 
-  return (
-    <Button
-      onClick={handleSignIn}
-      variant={variant}
-      size={size}
-      className={className}
-      type="button"
-    >
-      <Image
-        src="/google.svg"
-        alt="Google"
-        width={20}
-        height={20}
-        className="w-5 h-5 mr-2"
-      />
-      Sign in with Google
-    </Button>
-  );
+        const options = callbackUrl ? { callbackUrl } : undefined;
+        await signIn('google', options);
+    };
+
+    return (
+        <Button onClick={handleAction} variant={variant} size={size} className={className} type='button'>
+            {action === 'signin' && (
+                <Image src='/google.svg' alt='Google' width={20} height={20} className='mr-2 h-5 w-5' />
+            )}
+            {action === 'signin' ? 'Sign in with Google' : 'Sign Out'}
+        </Button>
+    );
 }
