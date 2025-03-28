@@ -25,8 +25,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 
 // Status badge component
 const StatusBadge = ({ status, color }: { status: string; color: string }) => (
-    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${color}`}>
-        <span className={`mr-1.5 h-2 w-2 rounded-full ${color.replace('text-', 'bg-')}`}></span>
+    <span className={`flex items-center justify-center rounded-full px-3 py-1 text-xs font-medium text-white ${color}`}>
         {status}
     </span>
 );
@@ -111,13 +110,11 @@ const Navbar = () => {
                                         <div className='text-sm text-white/80'>{session.user?.email}</div>
                                         <div className='mt-2 flex flex-wrap gap-2'>
                                             {session.user?.isResident ? (
-                                                <StatusBadge status='Resident' color='text-green-400' />
+                                                <StatusBadge status='Resident' color='bg-emerald-600' />
                                             ) : (
-                                                <StatusBadge status='Non-Resident' color='text-yellow-400' />
+                                                <StatusBadge status='Guest' color='bg-teal-500' />
                                             )}
-                                            {session.user?.isAdmin && (
-                                                <StatusBadge status='Admin' color='text-blue-400' />
-                                            )}
+                                            {session.user?.isAdmin && <StatusBadge status='Admin' color='bg-red-600' />}
                                         </div>
                                     </DropdownMenuLabel>
                                     <DropdownMenuSeparator className='bg-white/20' />

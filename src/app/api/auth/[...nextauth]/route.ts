@@ -7,6 +7,8 @@ import GoogleProvider from 'next-auth/providers/google';
 
 const prisma = new PrismaClient();
 
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 export const authOptions: NextAuthOptions = {
     // @ts-ignore - Known type issue with PrismaAdapter
     adapter: PrismaAdapter(prisma),
@@ -24,7 +26,7 @@ export const authOptions: NextAuthOptions = {
         })
     ],
     secret: process.env.NEXTAUTH_SECRET,
-    debug: process.env.NODE_ENV === 'development',
+    debug: isDevelopment,
     session: {
         strategy: 'jwt',
         maxAge: 24 * 60 * 60, // 24 hours
@@ -32,31 +34,35 @@ export const authOptions: NextAuthOptions = {
     },
     cookies: {
         sessionToken: {
-            name: `__Secure-next-auth.session-token`,
+            name: isDevelopment ? 'next-auth.session-token' : '__Secure-next-auth.session-token',
             options: {
                 httpOnly: true,
                 sameSite: 'lax',
                 path: '/',
-                secure: true,
-                domain: process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).hostname : undefined
+                secure: !isDevelopment,
+                domain: isDevelopment
+                    ? undefined
+                    : process.env.NEXTAUTH_URL
+                      ? new URL(process.env.NEXTAUTH_URL).hostname
+                      : undefined
             }
         },
         callbackUrl: {
-            name: `__Secure-next-auth.callback-url`,
+            name: isDevelopment ? 'next-auth.callback-url' : '__Secure-next-auth.callback-url',
             options: {
                 httpOnly: true,
                 sameSite: 'lax',
                 path: '/',
-                secure: true
+                secure: !isDevelopment
             }
         },
         csrfToken: {
-            name: `__Host-next-auth.csrf-token`,
+            name: isDevelopment ? 'next-auth.csrf-token' : '__Host-next-auth.csrf-token',
             options: {
                 httpOnly: true,
                 sameSite: 'lax',
                 path: '/',
-                secure: true
+                secure: !isDevelopment
             }
         }
     },
