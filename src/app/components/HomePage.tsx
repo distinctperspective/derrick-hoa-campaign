@@ -15,12 +15,11 @@ import EndorsementCarousel from './EndorsementCarousel';
 import { useState } from 'react';
 import EndorsementModal from './EndorsementModal';
 import { useSession } from 'next-auth/react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const HomePage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { data: session } = useSession();
     const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+    const { data: session } = useSession();
 
     const handleEndorsementSubmit = async (message: string) => {
         try {
@@ -200,83 +199,70 @@ const HomePage: React.FC = () => {
                             className='w-full flex justify-between items-center font-semibold text-xl text-[#0B3558] cursor-pointer'
                           >
                             <span>Event Agenda</span>
-                            <motion.div
-                              animate={{ rotate: isAccordionOpen ? 180 : 0 }}
-                              transition={{ duration: 0.3 }}
-                            >
+                            <div className='rotate-180 transition-transform duration-300'>
                               <ChevronDown className='w-5 h-5' />
-                            </motion.div>
+                            </div>
                           </button>
-                          <AnimatePresence>
-                            {isAccordionOpen && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                className='overflow-hidden'
-                              >
-                                <div className='mt-4 space-y-4'>
-                                  <ol className='space-y-4'>
-                                    <li className='flex'>
-                                      <span className='font-bold text-[#0B3558] mr-2'>1.</span>
-                                      <div>
-                                        <p className='font-semibold text-[#0B3558]'>Welcome & Introductions</p>
-                                        <p className='text-gray-600'>Opening remarks and introductions</p>
-                                      </div>
-                                    </li>
-                                    <li className='flex'>
-                                      <span className='font-bold text-[#0B3558] mr-2'>2.</span>
-                                      <div>
-                                        <p className='font-semibold text-[#0B3558]'>CCMC – Developer to Homeowner Board Transition Process</p>
-                                        <p className='text-gray-600'>Overview of CCMC's role in the developer-to-homeowner transition process</p>
-                                      </div>
-                                    </li>
-                                    <li className='flex'>
-                                      <span className='font-bold text-[#0B3558] mr-2'>3.</span>
-                                      <div>
-                                        <p className='font-semibold text-[#0B3558]'>Candidate Self Introduction – 2 minutes each</p>
-                                        <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-2'>
-                                          <li className='text-gray-600'>Christopher Collier</li>
-                                          <li className='text-gray-600'>Donald Hurley</li>
-                                          <li className='text-gray-600'>Ana Hix</li>
-                                          <li className='text-gray-600'>Kathleen High</li>
-                                          <li className='text-gray-600'>Frans Kopp</li>
-                                          <li className='text-gray-600'>Matthew Matney</li>
-                                          <li className='text-gray-600'>Rod Simmons</li>
-                                          <li className='text-gray-600'>John Randy Scott</li>
-                                          <li className='text-gray-600'>Derrick Threatt</li>
-                                          <li className='text-gray-600'>Dennis Ryan</li>
-                                          <li className='text-gray-600'>Karen Zeller</li>
-                                        </ul>
-                                      </div>
-                                    </li>
-                                    <li className='flex'>
-                                      <span className='font-bold text-[#0B3558] mr-2'>4.</span>
-                                      <div>
-                                        <p className='font-semibold text-[#0B3558]'>Candidate Q&A from Moderator – 2 minutes each, 2 questions each</p>
-                                        <p className='text-gray-600'>The moderator will select random pre-submitted questions for candidates to answer.</p>
-                                      </div>
-                                    </li>
-                                    <li className='flex'>
-                                      <span className='font-bold text-[#0B3558] mr-2'>5.</span>
-                                      <div>
-                                        <p className='font-semibold text-[#0B3558]'>Conclusion- 1 minute each</p>
-                                        <p className='text-gray-600'>Each candidate will have one minute for closing remarks.</p>
-                                      </div>
-                                    </li>
-                                    <li className='flex'>
-                                      <span className='font-bold text-[#0B3558] mr-2'>6.</span>
-                                      <div>
-                                        <p className='font-semibold text-[#0B3558]'>Networking & Informal Discussions</p>
-                                        <p className='text-gray-600'>Following the Q&A session, candidates will be available to meet and speak with attendees for thirty (30) minutes.</p>
-                                      </div>
-                                    </li>
-                                  </ol>
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
+                          {isAccordionOpen && (
+                            <div className='mt-4 space-y-4'>
+                              <ol className='space-y-4'>
+                                <li className='flex'>
+                                  <span className='font-bold text-[#0B3558] mr-2'>1.</span>
+                                  <div>
+                                    <p className='font-semibold text-[#0B3558]'>Welcome & Introductions</p>
+                                    <p className='text-gray-600'>Opening remarks and introductions</p>
+                                  </div>
+                                </li>
+                                <li className='flex'>
+                                  <span className='font-bold text-[#0B3558] mr-2'>2.</span>
+                                  <div>
+                                    <p className='font-semibold text-[#0B3558]'>CCMC – Developer to Homeowner Board Transition Process</p>
+                                    <p className='text-gray-600'>Overview of CCMC's role in the developer-to-homeowner transition process</p>
+                                  </div>
+                                </li>
+                                <li className='flex'>
+                                  <span className='font-bold text-[#0B3558] mr-2'>3.</span>
+                                  <div>
+                                    <p className='font-semibold text-[#0B3558]'>Candidate Self Introduction – 2 minutes each</p>
+                                    <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-2'>
+                                      <li className='text-gray-600'>Christopher Collier</li>
+                                      <li className='text-gray-600'>Donald Hurley</li>
+                                      <li className='text-gray-600'>Ana Hix</li>
+                                      <li className='text-gray-600'>Kathleen High</li>
+                                      <li className='text-gray-600'>Frans Kopp</li>
+                                      <li className='text-gray-600'>Matthew Matney</li>
+                                      <li className='text-gray-600'>Rod Simmons</li>
+                                      <li className='text-gray-600'>John Randy Scott</li>
+                                      <li className='text-gray-600'>Derrick Threatt</li>
+                                      <li className='text-gray-600'>Dennis Ryan</li>
+                                      <li className='text-gray-600'>Karen Zeller</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li className='flex'>
+                                  <span className='font-bold text-[#0B3558] mr-2'>4.</span>
+                                  <div>
+                                    <p className='font-semibold text-[#0B3558]'>Candidate Q&A from Moderator – 2 minutes each, 2 questions each</p>
+                                    <p className='text-gray-600'>The moderator will select random pre-submitted questions for candidates to answer.</p>
+                                  </div>
+                                </li>
+                                <li className='flex'>
+                                  <span className='font-bold text-[#0B3558] mr-2'>5.</span>
+                                  <div>
+                                    <p className='font-semibold text-[#0B3558]'>Conclusion- 1 minute each</p>
+                                    <p className='text-gray-600'>Each candidate will have one minute for closing remarks.</p>
+                                  </div>
+                                </li>
+                                <li className='flex'>
+                                  <span className='font-bold text-[#0B3558] mr-2'>6.</span>
+                                  <div>
+                                    <p className='font-semibold text-[#0B3558]'>Networking & Informal Discussions</p>
+                                    <p className='text-gray-600'>Following the Q&A session, candidates will be available to meet and speak with attendees for thirty (30) minutes.</p>
+                                  </div>
+                                </li>
+                              </ol>
+                            </div>
+                          )}
                         </div>
                       </div>
 
