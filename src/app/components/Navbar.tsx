@@ -132,13 +132,13 @@ const Navbar = () => {
                                     )}
                                     <DropdownMenuItem
                                         className='cursor-pointer focus:bg-white/10 focus:text-white'
-                                        onClick={() => signOut()}>
+                                        onClick={() => router.push('/auth/signout')}>
                                         <span className='font-extrabold tracking-wide uppercase'>Logout</span>
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         ) : (
-                            <Button onClick={() => signIn('google')} variant='primary' size='default' uppercase>
+                            <Button onClick={() => router.push('/auth/signin')} variant='primary' size='default' uppercase>
                                 Login
                             </Button>
                         )}
@@ -278,7 +278,7 @@ const Navbar = () => {
                                                     </Button>
                                                     <Button
                                                         onClick={() => {
-                                                            signIn('google');
+                                                            router.push('/auth/signin');
                                                             setIsMenuOpen(false);
                                                         }}
                                                         variant='primary'
@@ -306,7 +306,7 @@ const Navbar = () => {
                                                     </Button>
                                                     <Button
                                                         onClick={() => {
-                                                            signOut();
+                                                            router.push('/auth/signout');
                                                             setIsMenuOpen(false);
                                                         }}
                                                         variant='primary'
