@@ -54,10 +54,12 @@ export async function POST(
     // Send email to the user
     const emailResult = await sendRequestReplyEmail(
       requestData.user.email || '', // Use the actual requester's email with fallback
-      requestData.user.name || 'Resident',
       requestData.title,
       requestData.description,
-      replyContent
+      replyContent,
+      requestId,
+      session.user?.name || 'Admin',
+      session.user?.image
     );
     
     if (!emailResult.success) {

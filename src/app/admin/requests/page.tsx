@@ -10,8 +10,13 @@ import {
   Trash2,
   AlertCircle,
   X,
-  Mail
+  Mail,
+  MessageSquare,
+  User,
+  CheckCircle2,
+  XCircle
 } from 'lucide-react';
+import { toast } from 'sonner';
 
 type Reply = {
   id: string;
@@ -100,6 +105,16 @@ const ConfirmModal = ({
   );
 };
 
+// Function to convert URLs in text to hyperlinks
+function linkify(text: string) {
+  if (!text) return '';
+  
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, (url) => {
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">${url}</a>`;
+  });
+}
+
 export default function RequestsPage() {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
@@ -161,7 +176,12 @@ export default function RequestsPage() {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
+    // Ensure the date is valid before formatting
+    if (isNaN(date.getTime())) {
+      return 'Invalid date';
+    }
     return date.toLocaleString('en-US', {
+      weekday: 'short',
       month: 'short',
       day: 'numeric',
       year: 'numeric',
@@ -253,6 +273,13 @@ export default function RequestsPage() {
       if (response.ok) {
         setReplyContent('');
         
+        // Show success toast notification
+        toast.success('Reply submitted successfully', {
+          description: 'An email notification has been sent to the resident.',
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          duration: 4000,
+        });
+        
         // Refresh the selected request data to show the new reply
         const updatedRequestResponse = await fetch(`/api/admin/requests/${selectedRequest.id}`);
         if (updatedRequestResponse.ok) {
@@ -271,9 +298,17 @@ export default function RequestsPage() {
         }
       } else {
         console.error('Failed to submit reply');
+        toast.error('Failed to submit reply', {
+          description: 'Please try again later.',
+          icon: <XCircle className="h-4 w-4" />,
+        });
       }
     } catch (error) {
       console.error('Error submitting reply:', error);
+      toast.error('Error submitting reply', {
+        description: 'An unexpected error occurred.',
+        icon: <AlertCircle className="h-4 w-4" />,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -391,15 +426,25 @@ export default function RequestsPage() {
       });
       
       if (response.ok) {
-        // Show success message or notification
-        alert('Email sent successfully to ' + selectedRequest.userEmail);
+        // Show success toast notification instead of alert
+        toast.success('Email sent successfully', {
+          description: `Email sent to ${selectedRequest.userEmail}`,
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          duration: 4000,
+        });
       } else {
         console.error('Failed to send email');
-        alert('Failed to send email. Please try again.');
+        toast.error('Failed to send email', {
+          description: 'Please try again later.',
+          icon: <XCircle className="h-4 w-4" />,
+        });
       }
     } catch (error) {
       console.error('Error sending email:', error);
-      alert('Error sending email. Please try again.');
+      toast.error('Error sending email', {
+        description: 'An unexpected error occurred.',
+        icon: <AlertCircle className="h-4 w-4" />,
+      });
     } finally {
       setIsSendingEmail(false);
     }
@@ -547,7 +592,10 @@ export default function RequestsPage() {
                 </div>
                 
                 <div className="bg-gray-50 p-4 rounded-md mb-4">
-                  <p className="text-gray-700 whitespace-pre-wrap">{selectedRequest.description}</p>
+                  <p 
+                    className="text-gray-700 whitespace-pre-wrap" 
+                    dangerouslySetInnerHTML={{ __html: linkify(selectedRequest.description) }}
+                  ></p>
                 </div>
                 
                 <div className="text-sm text-gray-500">
@@ -631,10 +679,15 @@ export default function RequestsPage() {
                           )}
                         </div>
                         <div className="flex-grow">
-                          <div className="flex justify-between">
-                            <div>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center">
                               <span className="font-medium text-gray-900">{reply.userName}</span>
-                              <span className="text-xs text-gray-500 ml-2">
+                              {reply.userName === session?.user?.name && (
+                                <span className="ml-2 px-2 py-0.5 text-xs font-medium bg-red-600 text-white rounded-full">
+                                  Admin
+                                </span>
+                              )}
+                              <span className="text-xs text-gray-500 ml-3">
                                 {formatDate(reply.createdAt)}
                               </span>
                             </div>
@@ -643,10 +696,17 @@ export default function RequestsPage() {
                                 <button 
                                   onClick={() => sendEmailReply(reply.content)}
                                   disabled={isSendingEmail}
-                                  className="text-blue-500 hover:text-blue-700 p-1 rounded-full hover:bg-blue-50"
+                                  className="text-blue-500 hover:text-blue-700 p-1 rounded-full hover:bg-blue-50 flex items-center justify-center"
                                   title="Email this reply to the requester"
                                 >
-                                  <Mail size={14} />
+                                  {isSendingEmail ? (
+                                    <svg className="animate-spin h-4 w-4 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                  ) : (
+                                    <Mail size={14} />
+                                  )}
                                 </button>
                               )}
                               <button 
@@ -659,7 +719,10 @@ export default function RequestsPage() {
                               </button>
                             </div>
                           </div>
-                          <div className="mt-1 text-gray-700 whitespace-pre-wrap">{reply.content}</div>
+                          <div 
+                            className="mt-1 text-gray-700 whitespace-pre-wrap"
+                            dangerouslySetInnerHTML={{ __html: linkify(reply.content) }}
+                          ></div>
                         </div>
                       </div>
                     ))}
@@ -682,9 +745,19 @@ export default function RequestsPage() {
                     <button
                       type="submit"
                       disabled={!replyContent.trim() || isSubmitting}
-                      className="px-4 py-2 bg-[#0B3558] text-white rounded-md hover:bg-[#0B3558]/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 py-2 bg-[#0B3558] text-white rounded-md hover:bg-[#0B3558]/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                     >
-                      Send Reply
+                      {isSubmitting ? (
+                        <>
+                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Sending...
+                        </>
+                      ) : (
+                        'Send Reply'
+                      )}
                     </button>
                   </div>
                 </form>

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { PrismaClient } from '@prisma/client';
+import { sendRequestReplyEmail } from '@/app/utils/sendEmail';
 
 const prisma = new PrismaClient();
 
@@ -77,6 +78,36 @@ export async function POST(request: NextRequest) {
         },
       },
     });
+
+    // Send email notification to the requester if the user is an admin
+    if (updatedRequest?.user?.email && (session.user as any).isAdmin) {
+      try {
+        console.log('Sending email notification for new reply');
+        
+        // Get all replies to include in the email
+        const allReplies = updatedRequest.replies.map(reply => ({
+          content: reply.content,
+          userName: reply.userName,
+          createdAt: reply.createdAt,
+          isLatest: reply.content === content && reply.userName === session.user.name,
+          userImage: reply.userId === session.user.id ? (session.user as any).image : null
+        }));
+        
+        await sendRequestReplyEmail(
+          updatedRequest.user.email,
+          updatedRequest.title,
+          updatedRequest.description,
+          content,
+          updatedRequest.id,
+          session.user.name || 'Admin',
+          (session.user as any).image
+        );
+        console.log('Email notification sent successfully');
+      } catch (emailError) {
+        console.error('Failed to send email notification:', emailError);
+        // Continue with the response even if email fails
+      }
+    }
 
     return NextResponse.json(updatedRequest);
   } catch (error) {
