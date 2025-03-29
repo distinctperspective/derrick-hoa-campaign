@@ -36,8 +36,8 @@ export async function DELETE(
       where: { id: requestId },
     });
 
-    // Revalidate the admin requests page
-    revalidatePath('/admin/requests');
+    // Revalidate the super-admin requests page
+    revalidatePath('/super-admin/requests');
 
     // Return just the success status
     return NextResponse.json({ success: true });

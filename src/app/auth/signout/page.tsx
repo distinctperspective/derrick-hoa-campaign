@@ -18,6 +18,16 @@ export default function SignOut() {
 
   const handleSignOut = async () => {
     setIsLoading(true);
+    
+    // Clear all cookies related to authentication
+    document.cookie.split(';').forEach(cookie => {
+      const [name] = cookie.trim().split('=');
+      if (name.includes('next-auth') || name.includes('__Secure-next-auth') || name.includes('__Host-next-auth')) {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; ${!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? '' : 'secure; '}`;
+      }
+    });
+    
+    // Then perform the regular sign out
     await signOut({ callbackUrl: '/' });
   };
 

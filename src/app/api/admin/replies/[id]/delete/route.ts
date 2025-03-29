@@ -47,8 +47,8 @@ export async function DELETE(
     });
 
     // Revalidate the admin requests page and the specific request page
-    revalidatePath('/admin/requests');
-    revalidatePath(`/admin/requests/${reply.requestId}`);
+    revalidatePath('/super-admin/requests');
+    revalidatePath(`/super-admin/requests/${reply.requestId}`);
 
     // Return just the success status and requestId
     // This is much faster than fetching the entire request with all replies

@@ -123,13 +123,6 @@ const Navbar = () => {
                                         onClick={() => router.push('/profile')}>
                                         <span className='font-extrabold tracking-wide uppercase'>Profile</span>
                                     </DropdownMenuItem>
-                                    {session.user?.isAdmin && (
-                                        <DropdownMenuItem
-                                            className='cursor-pointer focus:bg-white/10 focus:text-white'
-                                            onClick={() => router.push('/admin')}>
-                                            <span className='font-extrabold tracking-wide uppercase'>Admin</span>
-                                        </DropdownMenuItem>
-                                    )}
                                     <DropdownMenuItem
                                         className='cursor-pointer focus:bg-white/10 focus:text-white'
                                         onClick={() => router.push('/auth/signout')}>
@@ -252,14 +245,6 @@ const Navbar = () => {
                                                 className='block py-2 font-extrabold tracking-wide text-white uppercase transition-colors hover:text-gray-200'
                                                 onClick={() => setIsMenuOpen(false)}>
                                                 Profile
-                                            </Link>
-                                        )}
-                                        {status === 'authenticated' && session?.user?.isAdmin && (
-                                            <Link
-                                                href='/admin'
-                                                className='block py-2 font-extrabold tracking-wide text-white uppercase transition-colors hover:text-gray-200'
-                                                onClick={() => setIsMenuOpen(false)}>
-                                                Admin
                                             </Link>
                                         )}
                                         {status !== 'authenticated' && (
