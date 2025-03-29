@@ -113,13 +113,19 @@ export const authOptions: NextAuthOptions = {
                 return false;
             }
             if (account?.provider === 'google') {
-                return true;
+                // Check if the user exists in the database
+                const existingUser = await prisma.user.findUnique({
+                    where: { email: user.email },
+                });
+                
+                // Only allow sign in if the user exists
+                return !!existingUser;
             }
             return false;
         },
         async session({ session, token }) {
             if (!session?.user || !token?.sub) {
-                return session;
+                return { ...session, user: undefined };
             }
 
             // Check if token is expired
@@ -136,7 +142,13 @@ export const authOptions: NextAuthOptions = {
                 });
 
                 if (!fullUser) {
-                    return session;
+                    return { ...session, user: undefined };
+                }
+                
+                // Verify that the email matches
+                if (fullUser.email !== session.user.email) {
+                    console.error('Email mismatch in session callback');
+                    return { ...session, user: undefined };
                 }
 
                 // Update last active timestamp
@@ -161,6 +173,17 @@ export const authOptions: NextAuthOptions = {
         },
         async jwt({ token, user }) {
             if (user) {
+                // Verify user exists in the database before creating token
+                const dbUser = await prisma.user.findUnique({
+                    where: { id: user.id },
+                    select: { id: true, email: true }
+                });
+                
+                if (!dbUser || dbUser.email !== user.email) {
+                    // User doesn't exist or email mismatch
+                    return {};
+                }
+                
                 token.sub = user.id;
                 token.email = user.email;
                 token.iat = Math.floor(Date.now() / 1000);
@@ -170,7 +193,7 @@ export const authOptions: NextAuthOptions = {
             // Check if token is expired
             const tokenExp = token.exp as number;
             if (tokenExp && tokenExp < Math.floor(Date.now() / 1000)) {
-                return token; // Let NextAuth handle token expiration
+                return {}; // Return empty token to force re-authentication
             }
 
             return token;
