@@ -9,7 +9,8 @@ import {
   ChevronRight,
   Trash2,
   AlertCircle,
-  X
+  X,
+  Mail
 } from 'lucide-react';
 
 type Reply = {
@@ -110,6 +111,7 @@ export default function RequestsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isReplyDeleting, setIsReplyDeleting] = useState<string | null>(null);
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
   
   // Modal state
   const [confirmModal, setConfirmModal] = useState({
@@ -373,6 +375,36 @@ export default function RequestsPage() {
     }
   };
 
+  // Send email with reply
+  const sendEmailReply = async (replyContent: string) => {
+    if (!selectedRequest) return;
+    
+    try {
+      setIsSendingEmail(true);
+      
+      const response = await fetch(`/api/admin/requests/${selectedRequest.id}/email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ replyContent }),
+      });
+      
+      if (response.ok) {
+        // Show success message or notification
+        alert('Email sent successfully to ' + selectedRequest.userEmail);
+      } else {
+        console.error('Failed to send email');
+        alert('Failed to send email. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Error sending email. Please try again.');
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -404,7 +436,7 @@ export default function RequestsPage() {
       
       <div className="flex flex-1 overflow-hidden">
         {/* Requests List */}
-        <div className="w-1/3 border-r overflow-y-auto">
+        <div className="w-1/3 border-r border-gray-100 overflow-y-auto bg-gray-50">
           <div className="p-4">
             <h2 className="text-lg font-semibold mb-4">All Requests ({requests?.length || 0})</h2>
             
@@ -413,29 +445,52 @@ export default function RequestsPage() {
                 No requests found
               </div>
             ) : (
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {requests?.map((request) => (
                   <li 
                     key={request.id}
-                    className={`p-3 rounded-md cursor-pointer border ${
+                    className={`p-4 rounded-lg cursor-pointer shadow-sm ${
                       selectedRequest?.id === request.id 
                         ? 'border-[#0B3558] bg-[#0B3558]/5' 
-                        : 'border-gray-200 hover:bg-gray-50'
+                        : 'bg-white hover:bg-gray-50'
                     }`}
                     onClick={() => setSelectedRequest(request)}
                   >
-                    <div className="flex justify-between">
-                      <h3 className="font-medium text-gray-900 truncate">{request.title}</h3>
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="flex items-center">
+                        <div className="flex-shrink-0 mr-2">
+                          {request.user?.image ? (
+                            <img 
+                              src={request.user.image} 
+                              alt={request.userName} 
+                              className="w-8 h-8 rounded-full"
+                            />
+                          ) : (
+                            <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                              <span className="text-gray-500 font-medium">
+                                {request.userName?.charAt(0) || '?'}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-900">{request.userName}</div>
+                          <div className="text-xs text-gray-500">{request.userEmail}</div>
+                        </div>
+                      </div>
+                      <span className="text-xs text-gray-500 whitespace-nowrap ml-2">
+                        {formatDate(request.createdAt).split(',')[0]}
+                      </span>
+                    </div>
+                    
+                    <div className="flex justify-between items-center mb-1">
+                      <h3 className="font-medium text-gray-900 truncate max-w-[70%]">{request.title}</h3>
                       <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${getStatusColor(request.status)}`}>
                         {getStatusIcon(request.status)}
                         <span className="ml-1">{request.status?.replace('_', ' ') || 'OPEN'}</span>
                       </span>
                     </div>
-                    <p className="text-sm text-gray-500 truncate mt-1">{request.description}</p>
-                    <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
-                      <span>{request.userName}</span>
-                      <span>{formatDate(request.createdAt)}</span>
-                    </div>
+                    <p className="text-sm text-gray-500 truncate">{request.description}</p>
                   </li>
                 ))}
               </ul>
@@ -447,7 +502,7 @@ export default function RequestsPage() {
         <div className="w-2/3 overflow-y-auto bg-gray-50">
           {selectedRequest ? (
             <div className="p-6">
-              <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+              <div className="bg-white rounded-lg shadow-sm p-6 mb-4">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-bold text-gray-900">{selectedRequest.title}</h2>
                   <div className="flex items-center">
@@ -501,7 +556,7 @@ export default function RequestsPage() {
               </div>
               
               {/* Status Update */}
-              <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+              <div className="bg-white rounded-lg shadow-sm p-6 mb-4">
                 <h3 className="font-medium text-gray-900 mb-3">Update Status</h3>
                 <div className="flex space-x-2">
                   <button
@@ -541,7 +596,7 @@ export default function RequestsPage() {
               </div>
               
               {/* Conversation */}
-              <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+              <div className="bg-white rounded-lg shadow-sm p-6 mb-4">
                 <h3 className="font-medium text-gray-900 mb-4">Conversation</h3>
                 
                 {selectedRequest.replies?.length === 0 ? (
@@ -554,11 +609,19 @@ export default function RequestsPage() {
                       <div key={reply.id} className="flex">
                         <div className="flex-shrink-0 mr-3">
                           {reply.userName === session?.user?.name ? (
+                            session?.user?.image ? (
+                              <img 
+                                src={session.user.image} 
+                                alt={session.user.name || 'Admin'} 
+                                className="w-8 h-8 rounded-full"
+                              />
+                            ) : (
                             <div className="w-8 h-8 rounded-full bg-[#0B3558] flex items-center justify-center">
                               <span className="text-white font-medium">
                                 {session.user.name?.charAt(0) || '?'}
                               </span>
                             </div>
+                            )
                           ) : (
                             <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
                               <span className="text-gray-500 font-medium">
@@ -570,19 +633,31 @@ export default function RequestsPage() {
                         <div className="flex-grow">
                           <div className="flex justify-between">
                             <div>
-                              <span className="font-medium">{reply.userName}</span>
+                              <span className="font-medium text-gray-900">{reply.userName}</span>
                               <span className="text-xs text-gray-500 ml-2">
                                 {formatDate(reply.createdAt)}
                               </span>
                             </div>
-                            <button 
-                              onClick={() => showDeleteReplyConfirmation(reply.id)}
-                              disabled={isReplyDeleting === reply.id}
-                              className="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-50"
-                              title="Delete reply"
-                            >
-                              <Trash2 size={14} />
-                            </button>
+                            <div className="flex space-x-1">
+                              {reply.userName === session?.user?.name && (
+                                <button 
+                                  onClick={() => sendEmailReply(reply.content)}
+                                  disabled={isSendingEmail}
+                                  className="text-blue-500 hover:text-blue-700 p-1 rounded-full hover:bg-blue-50"
+                                  title="Email this reply to the requester"
+                                >
+                                  <Mail size={14} />
+                                </button>
+                              )}
+                              <button 
+                                onClick={() => showDeleteReplyConfirmation(reply.id)}
+                                disabled={isReplyDeleting === reply.id}
+                                className="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-50"
+                                title="Delete reply"
+                              >
+                                <Trash2 size={14} />
+                              </button>
+                            </div>
                           </div>
                           <div className="mt-1 text-gray-700 whitespace-pre-wrap">{reply.content}</div>
                         </div>
