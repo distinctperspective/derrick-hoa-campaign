@@ -122,6 +122,13 @@ export const authOptions: NextAuthOptions = {
                 return session;
             }
 
+            // Check if token is expired
+            const tokenExp = token.exp as number;
+            if (tokenExp && tokenExp < Math.floor(Date.now() / 1000)) {
+                // Token is expired, return session without user data
+                return { ...session, user: undefined };
+            }
+
             try {
                 const fullUser = await prisma.user.findUnique({
                     where: { id: token.sub },
