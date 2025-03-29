@@ -10,35 +10,40 @@ export default function AuthError() {
   const [errorMessage, setErrorMessage] = useState('');
   
   useEffect(() => {
-    const error = searchParams.get('error');
-    
-    // Map error codes to user-friendly messages
-    switch (error) {
-      case 'Configuration':
-        setErrorMessage('There is a problem with the server configuration.');
-        break;
-      case 'AccessDenied':
-        setErrorMessage('You do not have permission to sign in.');
-        break;
-      case 'Verification':
-        setErrorMessage('The verification link is invalid or has expired.');
-        break;
-      case 'OAuthSignin':
-      case 'OAuthCallback':
-      case 'OAuthCreateAccount':
-      case 'EmailCreateAccount':
-      case 'Callback':
-      case 'OAuthAccountNotLinked':
-      case 'EmailSignin':
-      case 'CredentialsSignin':
-        setErrorMessage('There was a problem with your sign in attempt. Please try again.');
-        break;
-      case 'SessionRequired':
-        setErrorMessage('You must be signed in to access this page.');
-        break;
-      default:
-        setErrorMessage('An unknown error occurred. Please try again.');
-        break;
+    try {
+      const error = searchParams?.get('error');
+      
+      // Map error codes to user-friendly messages
+      switch (error) {
+        case 'Configuration':
+          setErrorMessage('There is a problem with the server configuration.');
+          break;
+        case 'AccessDenied':
+          setErrorMessage('You do not have permission to sign in.');
+          break;
+        case 'Verification':
+          setErrorMessage('The verification link is invalid or has expired.');
+          break;
+        case 'OAuthSignin':
+        case 'OAuthCallback':
+        case 'OAuthCreateAccount':
+        case 'EmailCreateAccount':
+        case 'Callback':
+        case 'OAuthAccountNotLinked':
+        case 'EmailSignin':
+        case 'CredentialsSignin':
+          setErrorMessage('There was a problem with your sign in attempt. Please try again.');
+          break;
+        case 'SessionRequired':
+          setErrorMessage('You must be signed in to access this page.');
+          break;
+        default:
+          setErrorMessage('An unknown error occurred. Please try again.');
+          break;
+      }
+    } catch (error) {
+      console.error('Error processing auth error:', error);
+      setErrorMessage('An unexpected error occurred. Please try again.');
     }
   }, [searchParams]);
 
