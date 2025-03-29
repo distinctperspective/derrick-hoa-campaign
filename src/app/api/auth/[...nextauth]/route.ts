@@ -1,14 +1,59 @@
 import { sendWelcomeEmail } from '@/app/utils/sendEmail';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
-import NextAuth, { NextAuthOptions, Session, User } from 'next-auth';
+import NextAuth, { DefaultSession, NextAuthOptions, Session } from 'next-auth';
 import { Adapter } from 'next-auth/adapters';
+import { JWT } from 'next-auth/jwt';
 import GoogleProvider from 'next-auth/providers/google';
 
 const prisma = new PrismaClient();
 
 const isDevelopment = process.env.NODE_ENV === 'development';
+
+// Extend the built-in session type
+declare module 'next-auth' {
+    interface Session extends DefaultSession {
+        user: {
+            id: string;
+            email: string | null;
+            name: string | null;
+            image: string | null;
+            address: string | null;
+            bio: string | null;
+            phoneNumber: string | null;
+            isResident: boolean;
+            isAdmin: boolean;
+            welcomeEmailSent: Date | null;
+            lastActive: Date | null;
+            sessionExpires: string;
+        };
+    }
+}
+
+// Define the user select type
+const userSelect = {
+    id: true,
+    email: true,
+    name: true,
+    image: true,
+    address: true,
+    bio: true,
+    phoneNumber: true,
+    isResident: true,
+    isAdmin: true,
+    welcomeEmailSent: true,
+    lastActive: true
+} as const;
+
+// Type for user data
+type UserData = Prisma.UserGetPayload<{ select: typeof userSelect }>;
+
+// Helper to check if session is expired
+const isSessionExpired = (session: Session) => {
+    if (!session.expires) return true;
+    return new Date(session.expires) < new Date();
+};
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma) as Adapter,
@@ -29,8 +74,8 @@ export const authOptions: NextAuthOptions = {
     debug: isDevelopment,
     session: {
         strategy: 'jwt',
-        maxAge: 12 * 60 * 60,
-        updateAge: 30 * 60
+        maxAge: 8 * 60 * 60, // 8 hours
+        updateAge: 15 * 60 // 15 minutes
     },
     cookies: {
         sessionToken: {
@@ -62,7 +107,7 @@ export const authOptions: NextAuthOptions = {
         }
     },
     callbacks: {
-        async signIn({ user, account, profile }) {
+        async signIn({ user, account }) {
             if (!user?.email) {
                 return false;
             }
@@ -72,45 +117,54 @@ export const authOptions: NextAuthOptions = {
             return false;
         },
         async session({ session, token }) {
-            if (session?.user && token?.sub) {
-                try {
-                    const fullUser = await prisma.user.findUnique({
-                        where: { id: token.sub },
-                        select: {
-                            id: true,
-                            email: true,
-                            name: true,
-                            image: true,
-                            address: true,
-                            bio: true,
-                            phoneNumber: true,
-                            isResident: true,
-                            isAdmin: true,
-                            welcomeEmailSent: true
-                        }
-                    });
-
-                    if (fullUser) {
-                        session.user = {
-                            ...session.user,
-                            ...fullUser,
-                            id: token.sub
-                        };
-                        return session;
-                    }
-                    return { expires: session.expires };
-                } catch (error) {
-                    console.error('Error fetching user data:', error);
-                    return { expires: session.expires };
-                }
+            if (!session?.user || !token?.sub) {
+                return session;
             }
-            return session;
+
+            try {
+                const fullUser = await prisma.user.findUnique({
+                    where: { id: token.sub },
+                    select: userSelect
+                });
+
+                if (!fullUser) {
+                    return session;
+                }
+
+                // Update last active timestamp
+                await prisma.user.update({
+                    where: { id: token.sub },
+                    data: { lastActive: new Date() }
+                });
+
+                // Ensure all user fields are properly typed
+                session.user = {
+                    ...session.user,
+                    ...fullUser,
+                    id: token.sub,
+                    sessionExpires: session.expires
+                } as Session['user'];
+
+                return session;
+            } catch (error) {
+                console.error('Error in session callback:', error);
+                return session;
+            }
         },
-        async jwt({ token, user, account }) {
+        async jwt({ token, user }) {
             if (user) {
                 token.sub = user.id;
                 token.email = user.email;
+                token.iat = Math.floor(Date.now() / 1000);
+                token.exp = Math.floor(Date.now() / 1000) + 8 * 60 * 60; // 8 hours
             }
+
+            // Check if token is expired
+            const tokenExp = token.exp as number;
+            if (tokenExp && tokenExp < Math.floor(Date.now() / 1000)) {
+                return token; // Let NextAuth handle token expiration
+            }
+
             return token;
         }
     },
@@ -118,11 +172,18 @@ export const authOptions: NextAuthOptions = {
         async signOut({ token }) {
             if (token?.sub) {
                 try {
+                    // Delete all sessions for this user
                     await prisma.session.deleteMany({
                         where: { userId: token.sub }
                     });
+
+                    // Update last active timestamp
+                    await prisma.user.update({
+                        where: { id: token.sub },
+                        data: { lastActive: new Date() }
+                    });
                 } catch (error) {
-                    console.error('Error clearing session:', error);
+                    console.error('Error in signOut event:', error);
                 }
             }
         },
