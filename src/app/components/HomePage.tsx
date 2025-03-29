@@ -8,16 +8,19 @@ import {
     Trees, 
     Building2, 
     DollarSign,
-    Phone
+    Phone,
+    ChevronDown
 } from 'lucide-react';
 import EndorsementCarousel from './EndorsementCarousel';
 import { useState } from 'react';
 import EndorsementModal from './EndorsementModal';
 import { useSession } from 'next-auth/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const HomePage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { data: session } = useSession();
+    const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
     const handleEndorsementSubmit = async (message: string) => {
         try {
@@ -141,6 +144,154 @@ const HomePage: React.FC = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Meet the Candidates Section */}
+                <div className='bg-white py-16'>
+                  <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+                    <div className='text-center mb-12'>
+                      <h2 className='text-3xl sm:text-4xl font-bold text-[#0B3558] mb-4'>2025 Board of Directors: Meet the Candidates</h2>
+                      <p className='text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto'>
+                        Join us for an opportunity to meet all candidates running for the Board of Directors.
+                      </p>
+                    </div>
+
+                    <div className='bg-gray-50 rounded-xl p-8 shadow-sm'>
+                      <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-6'>
+                        <div>
+                          <h3 className='text-2xl font-semibold text-[#0B3558]'>Candidate Meet & Greet Event</h3>
+                          <p className='text-lg text-gray-700 mt-2'>Wednesday, April 2, 2025 | 6PM - 8PM</p>
+                          <p className='text-lg text-gray-700'>The Lake House | 1039 Lake House Drive Conroe, TX 77304</p>
+                        </div>
+                        <div className='mt-4 md:mt-0'>
+                          <a 
+                            href='https://07f67uysd2c.typeform.com/to/TM4UUwky'
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='rounded-full bg-[#40BFB4] px-6 py-3 text-white hover:bg-[#40BFB4]/90 transition-colors font-bold'
+                          >
+                            Submit Questions for Candidates
+                          </a>
+                        </div>
+                      </div>
+
+                      {/* Map with location pin */}
+                      <div className='mb-8 rounded-lg overflow-hidden shadow-sm'>
+                        <div className='relative h-[300px] w-full'>
+                          <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.4626737121404!2d-95.4574!3d30.0236!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86473a7eadb6d49f%3A0x4a9a37f5f4ea6!2s1039%20Lake%20House%20Dr%2C%20Conroe%2C%20TX%2077304!5e0!3m2!1sen!2sus!4v1648226462031!5m2!1sen!2sus" 
+                            width="100%" 
+                            height="100%" 
+                            style={{ border: 0 }} 
+                            allowFullScreen={false} 
+                            loading="lazy" 
+                            referrerPolicy="no-referrer-when-downgrade"
+                            title="Event Location Map"
+                            className='absolute inset-0'
+                          ></iframe>
+                        </div>
+                      </div>
+
+                      {/* Accordion for agenda */}
+                      <div className='bg-white rounded-lg p-6 mb-6'>
+                        <div>
+                          <button 
+                            onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+                            className='w-full flex justify-between items-center font-semibold text-xl text-[#0B3558] cursor-pointer'
+                          >
+                            <span>Event Agenda</span>
+                            <motion.div
+                              animate={{ rotate: isAccordionOpen ? 180 : 0 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <ChevronDown className='w-5 h-5' />
+                            </motion.div>
+                          </button>
+                          <AnimatePresence>
+                            {isAccordionOpen && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                className='overflow-hidden'
+                              >
+                                <div className='mt-4 space-y-4'>
+                                  <ol className='space-y-4'>
+                                    <li className='flex'>
+                                      <span className='font-bold text-[#0B3558] mr-2'>1.</span>
+                                      <div>
+                                        <p className='font-semibold text-[#0B3558]'>Welcome & Introductions</p>
+                                        <p className='text-gray-600'>Opening remarks and introductions</p>
+                                      </div>
+                                    </li>
+                                    <li className='flex'>
+                                      <span className='font-bold text-[#0B3558] mr-2'>2.</span>
+                                      <div>
+                                        <p className='font-semibold text-[#0B3558]'>CCMC – Developer to Homeowner Board Transition Process</p>
+                                        <p className='text-gray-600'>Overview of CCMC's role in the developer-to-homeowner transition process</p>
+                                      </div>
+                                    </li>
+                                    <li className='flex'>
+                                      <span className='font-bold text-[#0B3558] mr-2'>3.</span>
+                                      <div>
+                                        <p className='font-semibold text-[#0B3558]'>Candidate Self Introduction – 2 minutes each</p>
+                                        <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-2'>
+                                          <li className='text-gray-600'>Christopher Collier</li>
+                                          <li className='text-gray-600'>Donald Hurley</li>
+                                          <li className='text-gray-600'>Ana Hix</li>
+                                          <li className='text-gray-600'>Kathleen High</li>
+                                          <li className='text-gray-600'>Frans Kopp</li>
+                                          <li className='text-gray-600'>Matthew Matney</li>
+                                          <li className='text-gray-600'>Rod Simmons</li>
+                                          <li className='text-gray-600'>John Randy Scott</li>
+                                          <li className='text-gray-600'>Derrick Threatt</li>
+                                          <li className='text-gray-600'>Dennis Ryan</li>
+                                          <li className='text-gray-600'>Karen Zeller</li>
+                                        </ul>
+                                      </div>
+                                    </li>
+                                    <li className='flex'>
+                                      <span className='font-bold text-[#0B3558] mr-2'>4.</span>
+                                      <div>
+                                        <p className='font-semibold text-[#0B3558]'>Candidate Q&A from Moderator – 2 minutes each, 2 questions each</p>
+                                        <p className='text-gray-600'>The moderator will select random pre-submitted questions for candidates to answer.</p>
+                                      </div>
+                                    </li>
+                                    <li className='flex'>
+                                      <span className='font-bold text-[#0B3558] mr-2'>5.</span>
+                                      <div>
+                                        <p className='font-semibold text-[#0B3558]'>Conclusion- 1 minute each</p>
+                                        <p className='text-gray-600'>Each candidate will have one minute for closing remarks.</p>
+                                      </div>
+                                    </li>
+                                    <li className='flex'>
+                                      <span className='font-bold text-[#0B3558] mr-2'>6.</span>
+                                      <div>
+                                        <p className='font-semibold text-[#0B3558]'>Networking & Informal Discussions</p>
+                                        <p className='text-gray-600'>Following the Q&A session, candidates will be available to meet and speak with attendees for thirty (30) minutes.</p>
+                                      </div>
+                                    </li>
+                                  </ol>
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      </div>
+
+                      <div className='flex justify-center'>
+                        <a 
+                          href='https://mcusercontent.com/96c4e852c32f3a5136f152250/files/41fe9110-9dcd-6c2a-6f57-99873689d3b3/Meet_the_Candidates_Draft_Agenda_FINAL_REVISED_NAMES.pdf'
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='rounded-full bg-[#0B3558] px-6 py-3 text-white hover:bg-[#0B3558]/90 transition-colors font-bold text-center'
+                        >
+                          Download the Agenda
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Community Concerns Section */}
