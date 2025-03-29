@@ -68,24 +68,24 @@ export const authOptions: NextAuthOptions = {
                     response_type: 'code'
                 }
             }
-        })
+        }),
     ],
     secret: process.env.NEXTAUTH_SECRET,
     debug: isDevelopment,
     session: {
-        strategy: 'jwt',
-        maxAge: 8 * 60 * 60, // 8 hours
+        strategy: "jwt",
+        maxAge: 60 * 60, // 1 hour
         updateAge: 15 * 60 // 15 minutes
     },
     cookies: {
         sessionToken: {
-            name: isDevelopment ? 'next-auth.session-token' : '__Secure-next-auth.session-token',
+            name: `__Secure-next-auth.session-token`,
             options: {
                 httpOnly: true,
                 sameSite: 'lax',
                 path: '/',
-                secure: !isDevelopment,
-                domain: isDevelopment ? undefined : new URL(process.env.NEXTAUTH_URL || '').hostname
+                secure: true,
+                maxAge: 60 * 60 // 1 hour
             }
         },
         callbackUrl: {
@@ -156,7 +156,7 @@ export const authOptions: NextAuthOptions = {
                 token.sub = user.id;
                 token.email = user.email;
                 token.iat = Math.floor(Date.now() / 1000);
-                token.exp = Math.floor(Date.now() / 1000) + 8 * 60 * 60; // 8 hours
+                token.exp = Math.floor(Date.now() / 1000) + 60 * 60; // 1 hour
             }
 
             // Check if token is expired
