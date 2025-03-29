@@ -3,6 +3,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 
 import NextAuth, { NextAuthOptions, Session, User } from 'next-auth';
+import { Adapter } from 'next-auth/adapters';
 import GoogleProvider from 'next-auth/providers/google';
 
 const prisma = new PrismaClient();
@@ -10,8 +11,7 @@ const prisma = new PrismaClient();
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 export const authOptions: NextAuthOptions = {
-    // @ts-ignore - Known type issue with PrismaAdapter
-    adapter: PrismaAdapter(prisma),
+    adapter: PrismaAdapter(prisma) as Adapter,
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -26,11 +26,11 @@ export const authOptions: NextAuthOptions = {
         })
     ],
     secret: process.env.NEXTAUTH_SECRET,
-    debug: isDevelopment,
+    debug: process.env.NODE_ENV === 'development',
     session: {
         strategy: 'jwt',
-        maxAge: 24 * 60 * 60, // 24 hours
-        updateAge: 60 * 60 // 1 hour
+        maxAge: 24 * 60 * 60,
+        updateAge: 60 * 60
     },
     cookies: {
         sessionToken: {
@@ -66,47 +66,15 @@ export const authOptions: NextAuthOptions = {
             }
         }
     },
-    events: {
-        createUser: async ({ user }) => {
-            try {
-                // Get full user data from database to access all fields
-                const userData = await prisma.user.findUnique({
-                    where: { id: user.id }
-                });
-
-                if (!userData || !userData.email) {
-                    console.error('User data not found or missing email');
-                    return;
-                }
-
-                // Check if user has address and phone number
-                const isProfileComplete = Boolean(userData.address && userData.phoneNumber);
-
-                // Send welcome email
-                const emailResult = await sendWelcomeEmail(
-                    userData.email,
-                    userData.name || 'Neighbor',
-                    isProfileComplete
-                );
-
-                if (emailResult.success) {
-                    // Update user record to indicate welcome email was sent
-                    await prisma.user.update({
-                        where: { id: user.id },
-                        data: { welcomeEmailSent: new Date() }
-                    });
-
-                    console.log(`Welcome email sent successfully to ${userData.email}`);
-                } else {
-                    console.error(`Failed to send welcome email to ${userData.email}:`, emailResult.error);
-                }
-            } catch (error) {
-                console.error('Error in createUser event:', error);
-            }
-        }
-    },
     callbacks: {
-        async session({ session, token }: { session: Session; token: any }) {
+        async signIn({ user, account, profile, email, credentials }) {
+            // Allow all Google sign ins
+            if (account?.provider === 'google') {
+                return true;
+            }
+            return false;
+        },
+        async session({ session, token, user }) {
             if (session?.user && token?.sub) {
                 try {
                     const fullUser = await prisma.user.findUnique({
@@ -135,16 +103,52 @@ export const authOptions: NextAuthOptions = {
                     console.error('Error fetching user data:', error);
                 }
             }
-
             return session;
         },
-        async jwt({ token, user }) {
-            // Add user ID to token when first created
+        async jwt({ token, user, account, profile }) {
             if (user) {
                 token.sub = user.id;
             }
             return token;
         }
+    },
+    events: {
+        async createUser({ user }) {
+            try {
+                const userData = await prisma.user.findUnique({
+                    where: { id: user.id }
+                });
+
+                if (!userData || !userData.email) {
+                    console.error('User data not found or missing email');
+                    return;
+                }
+
+                const isProfileComplete = Boolean(userData.address && userData.phoneNumber);
+
+                const emailResult = await sendWelcomeEmail(
+                    userData.email,
+                    userData.name || 'Neighbor',
+                    isProfileComplete
+                );
+
+                if (emailResult.success) {
+                    await prisma.user.update({
+                        where: { id: user.id },
+                        data: { welcomeEmailSent: new Date() }
+                    });
+                    console.log(`Welcome email sent successfully to ${userData.email}`);
+                } else {
+                    console.error(`Failed to send welcome email to ${userData.email}:`, emailResult.error);
+                }
+            } catch (error) {
+                console.error('Error in createUser event:', error);
+            }
+        }
+    },
+    pages: {
+        signIn: '/auth/signin',
+        error: '/auth/error'
     }
 };
 
