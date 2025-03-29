@@ -199,11 +199,14 @@ const HomePage: React.FC = () => {
                             className='w-full flex justify-between items-center font-semibold text-xl text-[#0B3558] cursor-pointer'
                           >
                             <span>Event Agenda</span>
-                            <div className='rotate-180 transition-transform duration-300'>
+                            <div className={`transform transition-transform duration-300 ${isAccordionOpen ? 'rotate-180' : 'rotate-0'}`}>
                               <ChevronDown className='w-5 h-5' />
                             </div>
                           </button>
-                          {isAccordionOpen && (
+                          <div 
+                            className={`overflow-hidden transition-all duration-300 ease-in-out ${isAccordionOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}
+                            style={{ transitionDelay: isAccordionOpen ? '0ms' : '0ms' }}
+                          >
                             <div className='mt-4 space-y-4'>
                               <ol className='space-y-4'>
                                 <li className='flex'>
@@ -262,7 +265,7 @@ const HomePage: React.FC = () => {
                                 </li>
                               </ol>
                             </div>
-                          )}
+                          </div>
                         </div>
                       </div>
 
