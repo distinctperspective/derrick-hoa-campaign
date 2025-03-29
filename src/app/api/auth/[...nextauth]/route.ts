@@ -79,12 +79,13 @@ export const authOptions: NextAuthOptions = {
     },
     cookies: {
         sessionToken: {
-            name: `__Secure-next-auth.session-token`,
+            name: isDevelopment ? 'next-auth.session-token' : '__Secure-next-auth.session-token',
             options: {
                 httpOnly: true,
                 sameSite: 'lax',
                 path: '/',
-                secure: true,
+                secure: !isDevelopment,
+                domain: isDevelopment ? undefined : new URL(process.env.NEXTAUTH_URL || '').hostname,
                 maxAge: 60 * 60 // 1 hour
             }
         },
