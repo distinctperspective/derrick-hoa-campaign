@@ -30,12 +30,15 @@ const mrDafoe = Mr_Dafoe({
 });
 
 export const metadata: Metadata = {
-    title: 'Derrick Threatt for GCP RAI',
+    title: {
+        default: 'Derrick Threatt for GCP RAI',
+        template: '%s | Derrick Threatt for GCP RAI'
+    },
     description: 'Campaign website for Derrick Threatt, candidate for Grand Central Park Residential Association Inc. Board Member',
     keywords: ['Derrick Threatt', 'Grand Central Park', 'GCP', 'RAI', 'Board Member', 'Conroe', 'Texas', 'Resident Board Member', 'HOA', 'Community'],
     authors: [{ name: 'Derrick Threatt' }],
     creator: 'Derrick Threatt',
-    publisher: 'Derrick Threatt Campaign',
+    publisher: 'Derrick Threatt for GCP RAI Campaign',
     robots: 'index, follow',
     // Using URL-compatible format that works during build
     metadataBase: new URL('https://gcphoatx.com'),
