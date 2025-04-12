@@ -72,6 +72,11 @@ const Navbar = () => {
                             FAQs
                         </Link>
                         <Link
+                            href='/annual-meeting'
+                            className='font-extrabold tracking-wide text-white uppercase transition-colors hover:text-gray-200'>
+                            Annual Meeting
+                        </Link>
+                        <Link
                             href='/request'
                             className='font-extrabold tracking-wide text-white uppercase transition-colors hover:text-gray-200'>
                             Contact Me
@@ -234,6 +239,12 @@ const Navbar = () => {
                                             className='block py-2 font-extrabold tracking-wide text-white uppercase transition-colors hover:text-gray-200'
                                             onClick={() => setIsMenuOpen(false)}>
                                             FAQs
+                                        </Link>
+                                        <Link
+                                            href='/annual-meeting'
+                                            className='block py-2 font-extrabold tracking-wide text-white uppercase transition-colors hover:text-gray-200'
+                                            onClick={() => setIsMenuOpen(false)}>
+                                            Annual Meeting
                                         </Link>
                                         <Link
                                             href='/request'
