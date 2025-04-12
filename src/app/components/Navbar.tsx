@@ -76,15 +76,6 @@ const Navbar = () => {
                             className='font-extrabold tracking-wide text-white uppercase transition-colors hover:text-gray-200'>
                             Contact Me
                         </Link>
-                        <Button
-                            href='https://grandcentralpark.ivotehoa.com/login'
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            variant='accent'
-                            size='default'
-                            uppercase>
-                            Vote Now
-                        </Button>
                         {status === 'authenticated' && session ? (
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -270,17 +261,6 @@ const Navbar = () => {
                                             <div className='mt-3 border-t border-white/20 pt-3'>
                                                 <div className='flex flex-row gap-2'>
                                                     <Button
-                                                        href='https://grandcentralpark.ivotehoa.com/login'
-                                                        target='_blank'
-                                                        rel='noopener noreferrer'
-                                                        variant='accent'
-                                                        size='default'
-                                                        uppercase
-                                                        className='flex-1'
-                                                        onClick={() => setIsMenuOpen(false)}>
-                                                        Vote Now
-                                                    </Button>
-                                                    <Button
                                                         onClick={() => {
                                                             router.push('/auth/signin');
                                                             setIsMenuOpen(false);
@@ -297,17 +277,6 @@ const Navbar = () => {
                                         {status === 'authenticated' && session && (
                                             <div className='mt-3 border-t border-white/20 pt-3'>
                                                 <div className='flex flex-row gap-2'>
-                                                    <Button
-                                                        href='https://grandcentralpark.ivotehoa.com/login'
-                                                        target='_blank'
-                                                        rel='noopener noreferrer'
-                                                        variant='accent'
-                                                        size='default'
-                                                        uppercase
-                                                        className='flex-1'
-                                                        onClick={() => setIsMenuOpen(false)}>
-                                                        Vote Now
-                                                    </Button>
                                                     <Button
                                                         onClick={() => {
                                                             router.push('/auth/signout');

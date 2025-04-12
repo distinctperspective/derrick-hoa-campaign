@@ -86,13 +86,14 @@ const HomePage: React.FC = () => {
                                         Derrick Threatt
                                     </h2>
                                     <p className='mt-2 text-xl text-gray-200 sm:text-2xl'>
-                                        for GCP RAI Board
+                                        Your Elected GCP RAI Board Representative
                                     </p>
                                 </div>
                                 
                                 <p className='mt-6 text-lg text-gray-100'>
-                                    As a proud resident of Grand Central Park, I'm running to be our community's
-                                    first resident board member. Together, we can shape the future of our neighborhood.
+                                    Thank you for your overwhelming support in electing me as our community's
+                                    first resident board member. I'm honored to represent you and committed to 
+                                    making our neighborhood even better.
                                 </p>
 
                                 <div className='mt-4 flex items-center text-white'>
@@ -119,7 +120,7 @@ const HomePage: React.FC = () => {
                                         href='https://grandcentralpark.ivotehoa.com/login'
                                         target='_blank'
                                         rel='noopener noreferrer'
-                                        className='rounded-full bg-[#E85C41] px-6 py-3 text-white hover:bg-[#E85C41]/90 transition-colors font-extrabold uppercase tracking-wide'
+                                        className='hidden rounded-full bg-[#E85C41] px-6 py-3 text-white hover:bg-[#E85C41]/90 transition-colors font-extrabold uppercase tracking-wide'
                                     >
                                         Vote Now
                                     </a>
@@ -128,156 +129,92 @@ const HomePage: React.FC = () => {
 
                             {/* Right Column - Image */}
                             <div className='lg:w-1/2 mt-[30px] lg:mt-0 flex justify-center lg:justify-end'>
-                                <div className='relative h-72 w-72 sm:h-80 sm:w-80 lg:h-96 lg:w-96'>
-                                    <div className='absolute inset-0 rounded-2xl bg-black/10'></div>
-                                    <Image
-                                        src='/images/optimized/derrick.jpg'
-                                        alt='Derrick Threatt - Candidate for Grand Central Park RAI Board'
-                                        fill
-                                        sizes="(max-width: 640px) 288px, (max-width: 768px) 320px, (max-width: 1024px) 384px, 384px"
-                                        className='rounded-2xl object-cover'
-                                        style={{ objectPosition: '50% 30%' }}
-                                        priority
-                                    />
+                                <div className='flex flex-col items-center'>
+                                    <div className='relative h-72 w-72 sm:h-80 sm:w-80 lg:h-96 lg:w-96'>
+                                        <div className='absolute inset-0 rounded-2xl bg-black/10'></div>
+                                        <Image
+                                            src='/images/optimized/derrick.jpg'
+                                            alt='Derrick Threatt - Elected Grand Central Park RAI Board Member'
+                                            fill
+                                            sizes="(max-width: 640px) 288px, (max-width: 768px) 320px, (max-width: 1024px) 384px, 384px"
+                                            className='rounded-2xl object-cover'
+                                            style={{ objectPosition: '50% 30%' }}
+                                            priority
+                                        />
+                                    </div>
+                                    <div className='mt-4 text-center'>
+                                        <h3 className='text-xl font-semibold text-white'>Director, Derrick Threatt</h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Meet the Candidates Section */}
+                {/* Your Vote Has Been Heard Section */}
                 <div className='bg-white py-16'>
                   <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
                     <div className='text-center mb-12'>
-                      <h2 className='text-3xl sm:text-4xl font-bold text-[#0B3558] mb-4'>2025 Board of Directors: Meet the Candidates</h2>
+                      <h2 className='text-3xl sm:text-4xl font-bold text-[#0B3558] mb-4'>Your Vote Has Been Heard</h2>
                       <p className='text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto'>
-                        Join us for an opportunity to meet all candidates running for the Board of Directors.
+                        Thank you for your overwhelming support in electing me as your first resident board member!
                       </p>
                     </div>
 
                     <div className='bg-gray-50 rounded-xl p-8 shadow-sm'>
-                      <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-6'>
-                        <div>
-                          <h3 className='text-2xl font-semibold text-[#0B3558]'>Candidate Meet & Greet Event</h3>
-                          <p className='text-lg text-gray-700 mt-2'>Wednesday, April 2, 2025 | 6PM - 8PM</p>
-                          <p className='text-lg text-gray-700'>The Lake House | 1039 Lake House Drive Conroe, TX 77304</p>
+                      <div className='flex flex-col lg:flex-row justify-between items-center mb-8 gap-8'>
+                        <div className='lg:w-1/2'>
+                          <h3 className='text-2xl font-semibold text-[#0B3558] mb-4'>Election Results</h3>
+                          <p className='text-lg text-gray-700 mb-4'>
+                            I'm honored to announce that I've been elected to serve as your representative on the Grand Central Park HOA Board of Directors.
+                          </p>
+                          <div className='space-y-4 text-gray-700'>
+                            <p>
+                              <span className='font-semibold'>Historic Participation:</span> We achieved an impressive 37% voter participation rate from our 997 homeowners, far exceeding the required 10% quorum.
+                            </p>
+                            <p>
+                              <span className='font-semibold'>Strong Mandate:</span> With 109 votes, I received the highest number of votes among all candidates, representing a clear mandate from our community.
+                            </p>
+                            <p className='mt-6'>
+                              After my first meeting with the board and CCMC, I will be setting up personal meet-and-greet sessions at the Lake House by appointment. This will be your opportunity to share your ideas, concerns, and vision for our community directly with me.
+                            </p>
+                          </div>
                         </div>
-                        <div className='mt-4 md:mt-0'>
-                          <a 
-                            href='https://07f67uysd2c.typeform.com/to/TM4UUwky'
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='rounded-full bg-[#40BFB4] px-6 py-3 text-white hover:bg-[#40BFB4]/90 transition-colors font-bold'
-                          >
-                            Submit Questions for Candidates
-                          </a>
-                        </div>
-                      </div>
-
-                      {/* Map with location pin */}
-                      <div className='mb-8 rounded-lg overflow-hidden shadow-sm'>
-                        <div className='relative h-[300px] w-full'>
-                          <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.4626737121404!2d-95.4574!3d30.0236!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86473a7eadb6d49f%3A0x4a9a37f5f4ea6!2s1039%20Lake%20House%20Dr%2C%20Conroe%2C%20TX%2077304!5e0!3m2!1sen!2sus!4v1648226462031!5m2!1sen!2sus" 
-                            width="100%" 
-                            height="100%" 
-                            style={{ border: 0 }} 
-                            allowFullScreen={false} 
-                            loading="lazy" 
-                            referrerPolicy="no-referrer-when-downgrade"
-                            title="Event Location Map"
-                            className='absolute inset-0'
-                          ></iframe>
-                        </div>
-                      </div>
-
-                      {/* Accordion for agenda */}
-                      <div className='bg-white rounded-lg p-6 mb-6'>
-                        <div>
-                          <button 
-                            onClick={() => setIsAccordionOpen(!isAccordionOpen)}
-                            className='w-full flex justify-between items-center font-semibold text-xl text-[#0B3558] cursor-pointer'
-                          >
-                            <span>Event Agenda</span>
-                            <div className={`transform transition-transform duration-300 ${isAccordionOpen ? 'rotate-180' : 'rotate-0'}`}>
-                              <ChevronDown className='w-5 h-5' />
-                            </div>
-                          </button>
-                          <div 
-                            className={`overflow-hidden transition-all duration-300 ease-in-out ${isAccordionOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}
-                            style={{ transitionDelay: isAccordionOpen ? '0ms' : '0ms' }}
-                          >
-                            <div className='mt-4 space-y-4'>
-                              <ol className='space-y-4'>
-                                <li className='flex'>
-                                  <span className='font-bold text-[#0B3558] mr-2'>1.</span>
-                                  <div>
-                                    <p className='font-semibold text-[#0B3558]'>Welcome & Introductions</p>
-                                    <p className='text-gray-600'>Opening remarks and introductions</p>
-                                  </div>
-                                </li>
-                                <li className='flex'>
-                                  <span className='font-bold text-[#0B3558] mr-2'>2.</span>
-                                  <div>
-                                    <p className='font-semibold text-[#0B3558]'>CCMC – Developer to Homeowner Board Transition Process</p>
-                                    <p className='text-gray-600'>Overview of CCMC's role in the developer-to-homeowner transition process</p>
-                                  </div>
-                                </li>
-                                <li className='flex'>
-                                  <span className='font-bold text-[#0B3558] mr-2'>3.</span>
-                                  <div>
-                                    <p className='font-semibold text-[#0B3558]'>Candidate Self Introduction – 2 minutes each</p>
-                                    <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-2'>
-                                      <li className='text-gray-600'>Christopher Collier</li>
-                                      <li className='text-gray-600'>Donald Hurley</li>
-                                      <li className='text-gray-600'>Ana Hix</li>
-                                      <li className='text-gray-600'>Kathleen High</li>
-                                      <li className='text-gray-600'>Frans Kopp</li>
-                                      <li className='text-gray-600'>Matthew Matney</li>
-                                      <li className='text-gray-600'>Rod Simmons</li>
-                                      <li className='text-gray-600'>John Randy Scott</li>
-                                      <li className='text-gray-600'>Derrick Threatt</li>
-                                      <li className='text-gray-600'>Dennis Ryan</li>
-                                      <li className='text-gray-600'>Karen Zeller</li>
-                                    </ul>
-                                  </div>
-                                </li>
-                                <li className='flex'>
-                                  <span className='font-bold text-[#0B3558] mr-2'>4.</span>
-                                  <div>
-                                    <p className='font-semibold text-[#0B3558]'>Candidate Q&A from Moderator – 2 minutes each, 2 questions each</p>
-                                    <p className='text-gray-600'>The moderator will select random pre-submitted questions for candidates to answer.</p>
-                                  </div>
-                                </li>
-                                <li className='flex'>
-                                  <span className='font-bold text-[#0B3558] mr-2'>5.</span>
-                                  <div>
-                                    <p className='font-semibold text-[#0B3558]'>Conclusion- 1 minute each</p>
-                                    <p className='text-gray-600'>Each candidate will have one minute for closing remarks.</p>
-                                  </div>
-                                </li>
-                                <li className='flex'>
-                                  <span className='font-bold text-[#0B3558] mr-2'>6.</span>
-                                  <div>
-                                    <p className='font-semibold text-[#0B3558]'>Networking & Informal Discussions</p>
-                                    <p className='text-gray-600'>Following the Q&A session, candidates will be available to meet and speak with attendees for thirty (30) minutes.</p>
-                                  </div>
-                                </li>
-                              </ol>
-                            </div>
+                        <div className='lg:w-1/2 flex justify-center'>
+                          <div className='relative max-w-md'>
+                            <Image
+                              src='/images/vote-results.png'
+                              alt='Grand Central Park HOA Election Results'
+                              width={500}
+                              height={400}
+                              className='rounded-lg shadow-md'
+                            />
                           </div>
                         </div>
                       </div>
 
-                      <div className='flex justify-center'>
-                        <a 
-                          href='https://mcusercontent.com/96c4e852c32f3a5136f152250/files/41fe9110-9dcd-6c2a-6f57-99873689d3b3/Meet_the_Candidates_Draft_Agenda_FINAL_REVISED_NAMES.pdf'
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          className='rounded-full bg-[#0B3558] px-6 py-3 text-white hover:bg-[#0B3558]/90 transition-colors font-bold text-center'
+                      <div className='bg-white rounded-lg p-6 border border-gray-200'>
+                        <h4 className='text-xl font-semibold text-[#0B3558] mb-4'>Next Steps</h4>
+                        <div className='space-y-4'>
+                          <p className='text-gray-700'>
+                            <span className='font-semibold'>Board Integration:</span> I'll be attending my first official board meeting to begin representing your interests immediately.
+                          </p>
+                          <p className='text-gray-700'>
+                            <span className='font-semibold'>Community Meet & Greets:</span> I'll be scheduling one-on-one meetings with residents at the Lake House to hear your concerns directly.
+                          </p>
+                          <p className='text-gray-700'>
+                            <span className='font-semibold'>Regular Updates:</span> Expect consistent communication about board activities and decisions that affect our community.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className='mt-8 flex justify-center'>
+                        <button
+                          disabled
+                          className='rounded-full bg-[#40BFB4]/70 px-6 py-3 text-white cursor-not-allowed opacity-80 font-bold'
                         >
-                          Download the Agenda
-                        </a>
+                          Meet with me. (Coming Soon)
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -578,7 +515,7 @@ const HomePage: React.FC = () => {
                                     href='https://grandcentralpark.ivotehoa.com/login'
                                     target='_blank'
                                     rel='noopener noreferrer'
-                                    className='rounded-full bg-[#E85C41] px-8 py-3 text-white hover:bg-[#E85C41]/90 transition-colors font-extrabold uppercase tracking-wide mr-4'
+                                    className='hidden rounded-full bg-[#E85C41] px-8 py-3 text-white hover:bg-[#E85C41]/90 transition-colors font-extrabold uppercase tracking-wide mr-4'
                                 >
                                     Vote Now
                                 </a>
